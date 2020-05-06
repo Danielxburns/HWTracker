@@ -1,0 +1,74 @@
+body {
+  background-color: rgb(190, 210, 175);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: navy;
+}
+
+h1, h2 {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: brown;
+  font-weight: bold;
+}
+
+table {
+  margin: 15px 0;
+  width: 80%;
+  min-width: 600px;
+  table-layout: fixed;
+  border: 4px solid black;
+  border-collapse: collapse;
+  background-color: rgb(250, 250, 220);
+  font-family: 'Courier New', Courier, monospace;
+}
+
+th, tfoot {
+  border: 4px solid;
+}
+
+td {
+  border: 1px solid;
+  width: 18%;
+  vertical-align: top;
+  padding-bottom: 12px;
+}
+
+th:first-child {
+  width: 100px;
+  min-width: 80px;
+}
+
+[class$= "day"] {
+  height: 100px;
+}
+
+.item {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item:hover {
+  cursor: pointer;
+}
+
+span:hover::after {
+  content:attr(data-text);
+  overflow: visible;
+  text-overflow: inherit;
+  background: #fff;
+  position: relative;
+  left:20px;
+  top:auto;
+  width: auto;
+  max-width: 20rem;
+  border: 1px solid #eaebec;
+  padding: 0 .5rem;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.28);
+  white-space: normal;
+  word-wrap: break-word;
+  display:block;
+  color:black;
+  margin-top:-1.25rem;
+}
