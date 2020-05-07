@@ -5,6 +5,8 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 })
 
+// EVENT HANDLERS
+
 function handleClick(e) {
   if(e.target.type === 'checkbox') {
     return handleCheckBox();
@@ -36,7 +38,7 @@ function add(el) {
   box.id = box.id++ || 1;
   const label = document.createElement("label");
   label.for = box.id;
-  if(assn) {
+  if(assn) { // is this conditional necessary? check into what prompt returns when cancelled
     const wrapper = document.createElement('span');
     wrapper.appendChild(document.createTextNode(assn))
     wrapper.className = 'text';
@@ -44,6 +46,27 @@ function add(el) {
     item.appendChild(box);
     item.appendChild(wrapper);
     el.appendChild(item);
+    postNewTask(assn)
   }
+};
+
+// SERVER FUNCS
+
+function postNewTask(task) {
+  let data = {task: task};
+  fetch('http://localhost:3000/newTask', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log('Success: ', data);
+    })
+    .catch(err => {
+      console.error(JSON.stringify(err));
+    })
 };
 
