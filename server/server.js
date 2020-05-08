@@ -12,5 +12,15 @@ app.listen(port, ()=> console.log(`listening on port ${port}.`));
 
 app.post('/newTask', ((req, res) => {
   console.log('app.post req.body: ', req.body);
-  res.json(req.body);
+  res.json({'!':'RESPONSE FROM DATABASE GOES HERE'});
+}));
+
+app.delete('/deleteTask', ((req, res) => {
+  console.log('app.delete req.body: ', req.body);
+  res.json({'!':'RESPONSE FROM DATABASE GOES HERE'});
+}))
+
+app.put('/toggleDone', ((req, res) => {
+  console.log('app.put req.body: ', req.body);
+  res.json({'!':'RESPONSE FROM DATABASE GOES HERE'});
 }))

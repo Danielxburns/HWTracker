@@ -9,25 +9,13 @@ cells.forEach(cell => {
 
 function handleClick(e) {
   if(e.target.type === 'checkbox') {
-    return handleCheckBox();
+    return handleCheckBox(e.target);
   } else if (e.target.className === 'text') {
-    return edit(e.target);
+    return (e.shiftKey) ? remove(e.target) : edit(e.target)
   } else {
     return add(e.target)
   }
-}
-
-function handleCheckBox() {
-  // tell the server to update the state of the task
-  console.log("...aaand another one's gone, and other one's gone. Another one bites the dust!");
 };
-
-function edit(el) {
-  let currText = el.dataset.text
-  let newText = prompt('Edit Assignment', currText)
-  el.dataset.text = newText;
-  el.innerHTML = newText;
-}
 
 function add(el) {
   const assn = prompt('add an assignment');
@@ -35,20 +23,45 @@ function add(el) {
   item.className = "item"
   const box = document.createElement("input");
   box.type = "checkbox";
-  box.id = box.id++ || 1;
+  box.taskId = box.taskId++ || 1;
   const label = document.createElement("label");
-  label.for = box.id;
-  if(assn) { // is this conditional necessary? check into what prompt returns when cancelled
-    const wrapper = document.createElement('span');
-    wrapper.appendChild(document.createTextNode(assn))
-    wrapper.className = 'text';
-    wrapper.setAttribute('data-text', assn)
+  label.for = box.taskId;
+  if(assn) { 
+    label.appendChild(document.createTextNode(assn))
+    label.className = 'text';
+    label.setAttribute('data-text', assn)
     item.appendChild(box);
-    item.appendChild(wrapper);
+    item.appendChild(label);
     el.appendChild(item);
     postNewTask(assn)
   }
+  console.dir(item.children[0]);
 };
+
+function handleCheckBox(el) {
+  console.dir(el);
+  toggleDone(el.taskId)
+  console.log("...aaand another one's gone, and other one's gone. Another one bites the dust!");
+};
+
+function remove(el) {
+  let sure = confirm(`Are you sure you want to delete \n ${el.innerHTML}?`)
+  if (sure) { 
+    deleteTask(el.children[0].taskId)
+    el.parentNode.remove();
+  }
+}
+
+function edit(el) {
+  let currText = el.dataset.text
+  let newText = prompt('Edit Assignment', currText)
+  if (newText) {
+    el.dataset.text = newText;
+    el.innerHTML = newText;
+    updateTask(el);
+  }
+}
+
 
 // SERVER FUNCS
 
@@ -70,3 +83,40 @@ function postNewTask(task) {
     })
 };
 
+function deleteTask(id) {
+  fetch('http://localhost:3000/deleteTask', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(id),
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log('Deleted: ', data);
+  })
+  .catch(err => {
+    console.error(err);
+  })
+}
+function toggleDone(id) {
+  fetch('http://localhost:3000/toggleDone', {
+    method: 'PUT',
+    // need to just send numbers
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(id),
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log('Toggled done: ', data);
+  })
+  .catch(err => {
+    console.error(err);
+  })
+}
+
+function updateTask(el) {
+
+}

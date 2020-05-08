@@ -53,7 +53,7 @@ th:first-child {
   cursor: pointer;
 }
 
-span:hover::after {
+label:hover::after {
   content:attr(data-text);
   overflow: visible;
   text-overflow: inherit;
