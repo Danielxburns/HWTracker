@@ -1,4 +1,7 @@
 
+const today = new Date();
+const day = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][today.getDay()]
+document.getElementById('today').innerHTML = `${day} ${today.toLocaleDateString()}`;
 
 const cells = document.querySelectorAll('td');
 cells.forEach(cell => {
@@ -20,10 +23,11 @@ function handleClick(e) {
 function add(el) {
   const assn = prompt('add an assignment');
   const item = document.createElement("div");
-  item.className = "item"
+  item.className = "item";
+  item.taskId = el.children.length +1;
   const box = document.createElement("input");
   box.type = "checkbox";
-  box.taskId = box.taskId++ || 1;
+  box.taskId = item.taskId;
   const label = document.createElement("label");
   label.for = box.taskId;
   if(assn) { 
