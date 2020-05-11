@@ -1,18 +1,38 @@
 
-const today = new Date();
-const day = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][today.getDay()]
-document.getElementById('today').innerHTML = `${day} ${today.toLocaleDateString()}`;
+/* ------------- ANCHOR HELPER FUNCS ------------ */
+
+const dt = new Date();
+function getToday(day) {
+  const dayOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day.getDay()];
+  const dateString = day.toDateString();
+  return `${dayOfWeek} ${dateString.substring(3, dateString.length - 5)}, ${day.getFullYear()}`;
+}
+
+function startWeek(day) {
+  const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : -6);
+  return new Date(day.setDate(diff)).toLocaleDateString();
+};
+
+function endWeek(day) {
+  const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : 6);
+  return new Date(day.setDate(diff)).toLocaleDateString();
+};
+
+document.getElementById('today').innerHTML = getToday(dt);
+
+document.getElementById('week').innerHTML = ` ${startWeek(dt)} - ${endWeek(dt)}`;
+
+
+/* -------- ANCHOR EVENT HANDLERS -------- */
 
 const cells = document.querySelectorAll('td');
 cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
-})
-
-// EVENT HANDLERS
+});
 
 function handleClick(e) {
   if(e.target.type === 'checkbox') {
-    return handleCheckBox(e.target);
+    return toggleDone(e.target.taskId);
   } else if (e.target.className === 'text') {
     return (e.shiftKey) ? remove(e.target) : edit(e.target)
   } else {
@@ -37,21 +57,14 @@ function add(el) {
     item.appendChild(box);
     item.appendChild(label);
     el.appendChild(item);
-    postNewTask(assn)
+    postNewTask(el.className, item.taskId, assn)
   }
-  console.dir(item.children[0]);
-};
-
-function handleCheckBox(el) {
-  console.dir(el);
-  toggleDone(el.taskId)
-  console.log("...aaand another one's gone, and other one's gone. Another one bites the dust!");
 };
 
 function remove(el) {
   let sure = confirm(`Are you sure you want to delete \n ${el.innerHTML}?`)
   if (sure) { 
-    deleteTask(el.children[0].taskId)
+    deleteTask(el.parentNode.taskId)
     el.parentNode.remove();
   }
 }
@@ -62,15 +75,19 @@ function edit(el) {
   if (newText) {
     el.dataset.text = newText;
     el.innerHTML = newText;
-    updateTask(el);
+    updateTask(el.parentNode.parentNode.className, el.parentNode.taskId, newText);
   }
 }
 
 
-// SERVER FUNCS
+/* ------------- ANCHOR SERVER FUNCS ------------ */
 
-function postNewTask(task) {
-  let data = {task: task};
+function postNewTask(subject, id, task) {
+  let data = {
+    subject: subject,
+    taskId: id,
+    date: new Date(),
+    task: task};
   fetch('http://localhost:3000/newTask', {
     method: 'POST',
     headers: {
@@ -80,7 +97,7 @@ function postNewTask(task) {
   })
     .then(res => res.json())
     .then(data => {
-      console.log('Success: ', data);
+      console.log('Success: ', JSON.stringify(data))
     })
     .catch(err => {
       console.error(JSON.stringify(err));
@@ -93,11 +110,11 @@ function deleteTask(id) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify({'taskId': id}),
   })
   .then(res => res.json())
   .then(data => {
-    console.log('Deleted: ', data);
+    console.log('Deleted: ', JSON.stringify(data));
   })
   .catch(err => {
     console.error(err);
@@ -110,17 +127,37 @@ function toggleDone(id) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify({"taskId": id}),
   })
   .then(res => res.json())
   .then(data => {
-    console.log('Toggled done: ', data);
+    console.log('Toggled task: ', JSON.stringify(data));
   })
   .catch(err => {
     console.error(err);
   })
 }
 
-function updateTask(el) {
-
+function updateTask(subject, id, task) {
+  let data = {
+    subject: subject,
+    taskId: id,
+    modifiedOn: new Date(),
+    task: task
+  };
+  fetch('http://localhost:3000/updateTask', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log('Updated task: ', JSON.stringify(data));
+  })
+  .catch(err => {
+    console.error(err);
+  })
 }
+
