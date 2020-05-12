@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const db = require('../db/index.js');
+
 const app = express();
 const port = 3000;
 
@@ -12,6 +14,7 @@ app.listen(port, ()=> console.log(`listening on port ${port}.`));
 
 app.post('/newTask', ((req, res) => {
   console.log('newTask req.body: ', req.body);
+  
   res.json({'!':'RESPONSE FROM DATABASE GOES HERE'});
 }));
 

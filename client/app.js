@@ -44,7 +44,7 @@ function add(el) {
   const assn = prompt('add an assignment');
   const item = document.createElement("div");
   item.className = "item";
-  item.taskId = el.children.length +1;
+  item.taskId = Date.now() + Math.random();
   const box = document.createElement("input");
   box.type = "checkbox";
   box.taskId = item.taskId;
@@ -57,7 +57,7 @@ function add(el) {
     item.appendChild(box);
     item.appendChild(label);
     el.appendChild(item);
-    postNewTask(el.className, item.taskId, assn)
+    postNewTask(el.className, el.parentNode.className, item.taskId, assn)
   }
 };
 
@@ -75,18 +75,19 @@ function edit(el) {
   if (newText) {
     el.dataset.text = newText;
     el.innerHTML = newText;
-    updateTask(el.parentNode.parentNode.className, el.parentNode.taskId, newText);
+    updateTask(el.parentNode.taskId, newText);
   }
 }
 
 
 /* ------------- ANCHOR SERVER FUNCS ------------ */
 
-function postNewTask(subject, id, task) {
+function postNewTask(subject, day, id, task) {
   let data = {
     subject: subject,
+    day: day,
     taskId: id,
-    date: new Date(),
+    createdOn: new Date(),
     task: task};
   fetch('http://localhost:3000/newTask', {
     method: 'POST',
@@ -127,7 +128,7 @@ function toggleDone(id) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({"taskId": id}),
+    body: JSON.stringify({'taskId': id}),
   })
   .then(res => res.json())
   .then(data => {
@@ -138,9 +139,8 @@ function toggleDone(id) {
   })
 }
 
-function updateTask(subject, id, task) {
+function updateTask(id, task) {
   let data = {
-    subject: subject,
     taskId: id,
     modifiedOn: new Date(),
     task: task
