@@ -11,5 +11,14 @@ db.once('open', () => {
 });
 
 const taskSchema = new mongoose.Schema({
-  
-})
+  taskID: Number,
+  subject: String,
+  day: String,
+  task: String,
+  createdOn: Date,
+  modifiedOn: Date,
+  done: Boolean
+});
+
+let Task = mongoose.model('Task', taskSchema);
+
