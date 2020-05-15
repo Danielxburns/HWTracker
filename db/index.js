@@ -11,10 +11,10 @@ db.once('open', () => {
 });
 
 const taskSchema = new mongoose.Schema({
-  taskID: Number,
   subject: String,
   day: String,
   task: String,
+  taskId: String,
   createdOn: Date,
   modifiedOn: Date,
   done: Boolean
@@ -22,3 +22,28 @@ const taskSchema = new mongoose.Schema({
 
 let Task = mongoose.model('Task', taskSchema);
 
+const postNewTask = (task, cb) => {
+  console.log(`inside postNewTask`);
+  console.log('task :>> ', task);
+  const newTask = new Task(task);
+  newTask.save((err, result) => {
+    if(err) { 
+      cb(err)
+    } else {
+      cb(null, result);
+    }
+  });
+};
+
+const deleteTask = (taskId, cb) => {
+  console.log('inside deleteTask - taskId :>> ', taskId);
+  Task.deleteOne({"taskId": taskId}, ((err, result) => {
+    if(err) {
+      cb(err);
+    } else {
+      cb(null, result);
+    }
+  }));
+}
+
+module.exports = { postNewTask, deleteTask }

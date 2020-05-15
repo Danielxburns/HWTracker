@@ -39,12 +39,12 @@ function handleClick(e) {
     return add(e.target)
   }
 };
-
+1589501617934165
 function add(el) {
   const assn = prompt('add an assignment');
   const item = document.createElement("div");
   item.className = "item";
-  item.taskId = Date.now() + Math.random();
+  item.taskId = Date.now().toString(36) + Math.floor(Math.random() * Math.pow(10, 5)).toString(36);
   const box = document.createElement("input");
   box.type = "checkbox";
   box.taskId = item.taskId;
@@ -57,7 +57,7 @@ function add(el) {
     item.appendChild(box);
     item.appendChild(label);
     el.appendChild(item);
-    postNewTask(el.className, el.parentNode.className, item.taskId, assn)
+    postNewTask(el.className, el.parentNode.className, item.taskId, assn, box.checked)
   }
 };
 
@@ -82,13 +82,15 @@ function edit(el) {
 
 /* ------------- ANCHOR SERVER FUNCS ------------ */
 
-function postNewTask(subject, day, id, task) {
+function postNewTask(subject, day, id, task, done) {
   let data = {
     subject: subject,
     day: day,
     taskId: id,
     createdOn: new Date(),
-    task: task};
+    task: task,
+    done: done,
+  };
   fetch('http://localhost:3000/newTask', {
     method: 'POST',
     headers: {
@@ -98,7 +100,7 @@ function postNewTask(subject, day, id, task) {
   })
     .then(res => res.json())
     .then(data => {
-      console.log('Success: ', JSON.stringify(data))
+      console.log('Success! Posted to database: ', JSON.stringify(data));
     })
     .catch(err => {
       console.error(JSON.stringify(err));

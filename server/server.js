@@ -13,14 +13,26 @@ app.use('/', express.static(path.join(__dirname, '/../client')));
 app.listen(port, ()=> console.log(`listening on port ${port}.`));
 
 app.post('/newTask', ((req, res) => {
-  console.log('newTask req.body: ', req.body);
-  
-  res.json({'!':'RESPONSE FROM DATABASE GOES HERE'});
+  const task = req.body;
+  db.postNewTask(task, (err, data) => {
+    if(err) {
+      res.status(500).send(err);
+    } else {
+      res.json(data);
+    }
+  });
 }));
 
 app.delete('/deleteTask', ((req, res) => {
   console.log('deleteTask req.body: ', req.body);
-  res.json({'!':'RESPONSE FROM DATABASE GOES HERE'});
+  const taskId = req.body.taskId;
+  db.deleteTask(taskId, (err, data) => {
+    if(err) {
+      res.status(500).send(err);
+    } else {
+      res.json(data);
+    }
+  })
 }))
 
 app.put('/toggleDone', ((req, res) => {
