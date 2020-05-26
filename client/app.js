@@ -1,7 +1,14 @@
 
-/* ------------- ANCHOR HELPER FUNCS ------------ */
-
 const dt = new Date();
+
+document.getElementById('week').innerHTML = ` ${startWeek(dt)} - ${endWeek(dt)}`;
+
+document.getElementById('today').innerHTML = getToday(dt);
+
+getTasks(startWeek(dt));
+
+/* ------------- HELPER FUNCS ANCHOR ------------ */
+
 function getToday(day) {
   const dayOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day.getDay()];
   const dateString = day.toDateString();
@@ -18,12 +25,9 @@ function endWeek(day) {
   return new Date(day.setDate(diff)).toLocaleDateString();
 };
 
-document.getElementById('today').innerHTML = getToday(dt);
-
-document.getElementById('week').innerHTML = ` ${startWeek(dt)} - ${endWeek(dt)}`;
 
 
-/* -------- ANCHOR EVENT HANDLERS -------- */
+/* -------- EVENT HANDLERS ANCHOR -------- */
 
 const cells = document.querySelectorAll('td');
 cells.forEach(cell => {
@@ -32,14 +36,14 @@ cells.forEach(cell => {
 
 function handleClick(e) {
   if(e.target.type === 'checkbox') {
-    return toggleDone(e.target.taskId);
+    return updateTask(e.target.taskId, e.target.nextSibling.dataset.text, e.target.checked);
   } else if (e.target.className === 'text') {
     return (e.shiftKey) ? remove(e.target) : edit(e.target)
   } else {
     return add(e.target)
   }
 };
-1589501617934165
+
 function add(el) {
   const assn = prompt('add an assignment');
   const item = document.createElement("div");
@@ -73,14 +77,34 @@ function edit(el) {
   let currText = el.dataset.text
   let newText = prompt('Edit Assignment', currText)
   if (newText) {
+  
     el.dataset.text = newText;
     el.innerHTML = newText;
-    updateTask(el.parentNode.taskId, newText);
+    console.dir(el);
+    updateTask(el.parentNode.taskId, newText, el.previousSibling.checked);
   }
 }
 
 
-/* ------------- ANCHOR SERVER FUNCS ------------ */
+/* ------------- SERVER FUNCS ANCHOR ------------ */
+
+function getTasks(start) {
+  console.log('inside getTasks startWeek :>> ', start);
+  fetch('http://localhost:3000/getTasks', /* {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ 'weekStart': start })
+  } */)
+  .then(res => res.json())
+  .then(data => {
+    console.log(`Got data: ${JSON.stringify(data)}`);
+  })
+  .catch(err => {
+    console.error(JSON.stringify(err));
+  })
+}
 
 function postNewTask(subject, day, id, task, done) {
   let data = {
@@ -88,6 +112,8 @@ function postNewTask(subject, day, id, task, done) {
     day: day,
     taskId: id,
     createdOn: new Date(),
+    weekStart: startWeek(new Date()),
+    weekEnd: endWeek(new Date()),
     task: task,
     done: done,
   };
@@ -122,31 +148,16 @@ function deleteTask(id) {
   .catch(err => {
     console.error(err);
   })
-}
-function toggleDone(id) {
-  fetch('http://localhost:3000/toggleDone', {
-    method: 'PUT',
-    // need to just send numbers
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({'taskId': id}),
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log('Toggled task: ', JSON.stringify(data));
-  })
-  .catch(err => {
-    console.error(err);
-  })
-}
+};
 
-function updateTask(id, task) {
+function updateTask(id, task, done) {
   let data = {
     taskId: id,
     modifiedOn: new Date(),
-    task: task
+    task: task,
+    done: done
   };
+  console.log('updated data from client:>> ', data);
   fetch('http://localhost:3000/updateTask', {
     method: 'PUT',
     headers: {

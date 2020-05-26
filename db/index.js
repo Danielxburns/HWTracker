@@ -3,7 +3,7 @@ const db = mongoose.connection;
 
 let uri = 'mongodb://localhost/hw';
 
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true, 'useFindAndModify': false});
 
 db.on('error', console.error.bind(console, 'db connection error:'));
 db.once('open', () => {
@@ -17,10 +17,22 @@ const taskSchema = new mongoose.Schema({
   taskId: String,
   createdOn: Date,
   modifiedOn: Date,
+  weekStart: String,
+  weekEnd: String,
   done: Boolean
 });
 
 let Task = mongoose.model('Task', taskSchema);
+
+const getAllTasks = (weekStart, cb) => {
+console.log('inside db.getAllTasks - weekStart :>> ', weekStart);  Task.find(weekStart, ((err, result) => {
+    if(err) {
+      cb(err)
+    } else {
+      cb(null, result);
+    }
+  }));
+};
 
 const postNewTask = (task, cb) => {
   console.log(`inside postNewTask`);
@@ -44,6 +56,24 @@ const deleteTask = (taskId, cb) => {
       cb(null, result);
     }
   }));
-}
+};
 
-module.exports = { postNewTask, deleteTask }
+const updateTask = async (data, cb) => {
+/*   const options = {"new": true}; */
+  const query = await Task.findOne({"taskId": data.taskId});
+  query.task = data.task;
+  query.done = data.done;
+  query.modifiedOn = data.modifiedOn;
+  query.save();
+  /* , ((err, result) => {
+    if(err) {
+      cb(err);
+    } else {
+      cb(null, result);
+    }
+  })); */
+};
+
+
+
+module.exports = { getAllTasks, postNewTask, deleteTask, updateTask }
