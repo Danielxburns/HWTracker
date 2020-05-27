@@ -25,7 +25,8 @@ const taskSchema = new mongoose.Schema({
 let Task = mongoose.model('Task', taskSchema);
 
 const getAllTasks = (weekStart, cb) => {
-console.log('inside db.getAllTasks - weekStart :>> ', weekStart);  Task.find(weekStart, ((err, result) => {
+  console.log('inside db.getAllTasks - weekStart :>> ', weekStart);
+  Task.find(weekStart, ((err, result) => {
     if(err) {
       cb(err)
     } else {
@@ -64,14 +65,14 @@ const updateTask = async (data, cb) => {
   query.task = data.task;
   query.done = data.done;
   query.modifiedOn = data.modifiedOn;
-  query.save();
-  /* , ((err, result) => {
+  query.save((err, result) => {
+    console.log('inside query.save()');
     if(err) {
       cb(err);
     } else {
       cb(null, result);
     }
-  })); */
+  });
 };
 
 

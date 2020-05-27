@@ -47,28 +47,14 @@ app.delete('/deleteTask', ((req, res) => {
       res.json(data);
     }
   })
-}))
-/* 
-app.put('/toggleDone', ((req, res) => {
-  console.log('toggleDone req.body: ', req.body);
-  const taskId = req.body.taskId;
-  db.toggleDone(taskId, (err, data) => {
-    if(err) {
-      res.status(500).send(err);
-    } else {
- //     res.json({'!':'RESPONSE FROM DATABASE GOES HERE'});
-      res.json(data);
-    }
-  })
-})) */
+}));
 
 app.put('/updateTask', ((req, res) => {
   console.log('updateTask req.body: ', req.body);
   db.updateTask(req.body, (err, data) => {
-    if(err)
-  {
+    if(err) {
     res.status(500).send(err);
   } else {
     res.json(data/* {'!':'RESPONSE FROM DATABASE GOES HERE'} */);
   } })
-}) )
+}));
