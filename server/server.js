@@ -37,8 +37,7 @@ app.post('/newTask', ((req, res) => {
 }));
 
 app.delete('/deleteTask', ((req, res) => {
-  const taskId = req.body.taskId;
-  db.deleteTask(taskId, (err, data) => {
+  db.deleteTask(req.body._id, (err, data) => {
     if(err) {
       res.status(500).send(err);
     } else {

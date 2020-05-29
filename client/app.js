@@ -10,9 +10,25 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
-getTasks(); // chain funcs to display response data
+getTasks();
 
-/* ------------- HELPER FUNCS ANCHOR ------------ */
+/* ------------- ANCHOR HELPER FUNCS ------------ */
+
+function getToday(day) {
+  const dayOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day.getDay()];
+  const dateString = day.toDateString();
+  return `${dayOfWeek} ${dateString.substring(3, dateString.length - 5)}, ${day.getFullYear()}`;
+}
+
+function startWeek(day) {
+  const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : -6);
+  return new Date(day.setDate(diff)).toLocaleDateString();
+};
+
+function endWeek(day) {
+  const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : 6);
+  return new Date(day.setDate(diff)).toLocaleDateString();
+};
 
 function populateCells(tasks) {
   cells.forEach(cell => {
@@ -32,7 +48,7 @@ function displayTask(cell, task) {
   if(task.done) { checkBox.checked = true }
   const label = document.createElement("label");
   label.for = checkBox; // REVIEW does this need to be tied to an id?
-  if(task) { // don't do anything if there is no task entered)
+  if(task) { // don't do anything if there is no task entered
     label.appendChild(document.createTextNode(task.task))
     label.className = 'text';
     label.setAttribute('data-text', task.task)
@@ -42,24 +58,7 @@ function displayTask(cell, task) {
   }
 };
 
-
-function getToday(day) {
-  const dayOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day.getDay()];
-  const dateString = day.toDateString();
-  return `${dayOfWeek} ${dateString.substring(3, dateString.length - 5)}, ${day.getFullYear()}`;
-}
-
-function startWeek(day) {
-  const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : -6);
-  return new Date(day.setDate(diff)).toLocaleDateString();
-};
-
-function endWeek(day) {
-  const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : 6);
-  return new Date(day.setDate(diff)).toLocaleDateString();
-};
-
-/* -------- EVENT HANDLERS ANCHOR -------- */
+/* -------- ANCHOR EVENT HANDLERS -------- */
 
 function handleClick(e) {
   if(e.target.type === 'checkbox') {
@@ -67,15 +66,17 @@ function handleClick(e) {
   } else if (e.target.className === 'text') {
     return (e.shiftKey) ? remove(e.target) : edit(e.target)
   } else {
-    return add(e.target)
+    return addNewTask(e.target)
   }
 };
 
-async function add(el) {
+async function addNewTask(el) {
+  console.dir(el);
     const assignment = prompt('add an assignment', 'enter assignment here');
     try {
-      await postNewTask(el.className, el.parentNode.className, assignment)
-        .then(displayTask(el, assignment));
+      const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
+      console.log('newTask :>> ', newTask);
+      displayTask(el, newTask);
     }
     catch(err) {
       console.log('There was an error :>> ', err);
@@ -85,7 +86,7 @@ async function add(el) {
 function remove(el) {
   let sure = confirm(`Are you sure you want to delete \n ${el.innerHTML}?`)
   if (sure) { 
-    deleteTask(el.parentNode.taskId)
+    deleteTask(el.parentNode._id)
     el.parentNode.remove();
   }
 };
@@ -100,7 +101,7 @@ function edit(el) {
   }
 };
 
-/* ------------- SERVER FUNCS ANCHOR ------------ */
+/* ------------- ANCHOR SERVER CALLS ------------ */
 
 function getTasks() {
   fetch('http://localhost:3000/getTasks')
@@ -109,7 +110,7 @@ function getTasks() {
     populateCells(data);
   })
   .catch(err => {
-    console.error(JSON.stringify(err));
+    console.error(JSON.stringify(err)); // TODO handle gracefully 
   })
 };
 
@@ -131,10 +132,10 @@ function postNewTask(subject, day, task) {
   })
     .then(res => res.json())
     .then(data => {
-      console.log('Success! Posted to database: ', JSON.stringify(data));
+      console.log('Success! Posted to database: ', data);
     })
     .catch(err => {
-      console.error(JSON.stringify(err));
+      console.error(err);
     })
 };
 
@@ -144,7 +145,7 @@ function deleteTask(id) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({'taskId': id}),
+    body: JSON.stringify({'_id': id}),
   })
   .then(res => res.json())
   .then(data => {
