@@ -73,14 +73,16 @@ function handleClick(e) {
 async function addNewTask(el) {
   console.dir(el);
     const assignment = prompt('add an assignment', 'enter assignment here');
-    try {
-      const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
-      console.log('newTask :>> ', newTask);
+    if (assignment) {
+      try {
+        const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
+        console.log('newTask :>> ', newTask);
       displayTask(el, newTask);
     }
     catch(err) {
       console.log('There was an error :>> ', err);
     }
+  }
 };
 
 function remove(el) {
