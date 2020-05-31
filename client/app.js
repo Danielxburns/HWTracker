@@ -77,10 +77,10 @@ async function addNewTask(el) {
         const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
         console.log('inside addNewTask :>> ', newTask);
         return await displayTask(el, newTask);
-    }
-    catch(err) {
-      console.log('There was an error :>> ', err);
-    }
+      }
+      catch(err) {
+        console.log('There was an error :>> ', err);
+      }
   }
 };
 
