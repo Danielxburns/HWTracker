@@ -71,13 +71,12 @@ function handleClick(e) {
 };
 
 async function addNewTask(el) {
-  console.dir(el);
-    const assignment = prompt('add an assignment', 'enter assignment here');
+    const assignment = prompt('add an assignment');
     if (assignment) {
       try {
         const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
-        console.log('newTask :>> ', newTask);
-      displayTask(el, newTask);
+        console.log('inside addNewTask :>> ', newTask);
+        return await displayTask(el, newTask);
     }
     catch(err) {
       console.log('There was an error :>> ', err);
@@ -116,7 +115,7 @@ function getTasks() {
   })
 };
 
-function postNewTask(subject, day, task) {
+async function postNewTask(subject, day, task) {
   let data = {
     subject: subject,
     day: day,
@@ -125,20 +124,19 @@ function postNewTask(subject, day, task) {
     weekEnd: endWeek(new Date()),
     task: task,
   };
-  fetch('http://localhost:3000/newTask', {
+  const response = await fetch('http://localhost:3000/newTask', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data),
   })
-    .then(res => res.json())
-    .then(data => {
-      console.log('Success! Posted to database: ', data);
-    })
-    .catch(err => {
+  const taskData = await response.json();
+  console.log('Success! Posted to database: ', taskData);
+  return taskData;
+/*     .catch(err => {
       console.error(err);
-    })
+    }) */
 };
 
 function deleteTask(id) {
