@@ -10,9 +10,11 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
+const url = 'https://danielxburns.github.io/HWTracker/';
+
 getTasks();
 
-/* ------------- ANCHOR HELPER FUNCS ------------ */
+/* ------------- ANCHOR UTILS ------------ */
 
 function getToday(day) {
   const dayOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day.getDay()];
@@ -104,7 +106,7 @@ function edit(el) {
 
 /* ------------- ANCHOR SERVER CALLS ------------ */
 
-const url = 'https://danielxburns.github.io/HWTracker/';
+
 function getTasks() {
   fetch(`${url}/getTasks`)
   .then(res => res.json())
