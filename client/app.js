@@ -104,8 +104,9 @@ function edit(el) {
 
 /* ------------- ANCHOR SERVER CALLS ------------ */
 
+const url = 'https://danielxburns.github.io/HWTracker/';
 function getTasks() {
-  fetch('http://localhost:3000/getTasks')
+  fetch(`${url}/getTasks`)
   .then(res => res.json())
   .then(data => {
     populateCells(data);
@@ -124,7 +125,7 @@ async function postNewTask(subject, day, task) {
     weekEnd: endWeek(new Date()),
     task: task,
   };
-  const response = await fetch('http://localhost:3000/newTask', {
+  const response = await fetch(`${url}/newTask`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -140,7 +141,7 @@ async function postNewTask(subject, day, task) {
 };
 
 function deleteTask(id) {
-  fetch('http://localhost:3000/deleteTask', {
+  fetch(`${url}/deleteTask`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
@@ -163,7 +164,7 @@ function updateTask(id, task, done) {
     task: task,
     done: done
   };
-  fetch('http://localhost:3000/updateTask', {
+  fetch(`${url}/updateTask`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
