@@ -10,7 +10,7 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
-const url = 'https://danielxburns.github.io/HWTracker/';
+const url = 'http://localhost:3000';
 
 getTasks();
 
@@ -77,7 +77,6 @@ async function addNewTask(el) {
     if (assignment) {
       try {
         const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
-        console.log('inside addNewTask :>> ', newTask);
         return await displayTask(el, newTask);
       }
       catch(err) {
@@ -108,7 +107,7 @@ function edit(el) {
 
 
 function getTasks() {
-  fetch(`${url}/getTasks`)
+  fetch(`${url}/getTasks`, {mode: 'cors'})
   .then(res => res.json())
   .then(data => {
     populateCells(data);
