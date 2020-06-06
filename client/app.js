@@ -10,7 +10,7 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
-const url = 'https://danielxburns.github.io/HWTracker/';
+const url = 'https://peaceful-gorge-58758.herokuapp.com/';
 
 getTasks();
 
