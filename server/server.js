@@ -1,4 +1,4 @@
-
+const cool = require("cool-ascii-faces");
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -9,6 +9,11 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, '/../client')));
+
+app.set('views', path.join(__dirname, 'views'))
+.set('view engine', 'ejs')
+.get('/', (req, res) => res.render('pages/index'))
+.get('/cool', (req, res) => res.send(cool()))
 
 app.listen(port, ()=> console.log(`listening on port ${port}.`));
 
