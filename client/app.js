@@ -108,7 +108,7 @@ function edit(el) {
 
 
 function getTasks() {
-  fetch(`${url}/getTasks`)
+  fetch(`${url}/getTasks`, {mode: no-cors})
   .then(res => res.json())
   .then(data => {
     populateCells(data);
