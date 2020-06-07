@@ -10,7 +10,7 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
-const url = 'https://peaceful-gorge-58758.herokuapp.com/';
+const url = 'https://peaceful-gorge-58758.herokuapp.com';
 
 getTasks();
 
@@ -130,9 +130,10 @@ async function postNewTask(subject, day, task) {
   const response = await fetch(`${url}/newTask`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
+    mode: 'no-cors'
   })
   const taskData = await response.json();
   console.log('Success! Posted to database: ', taskData);
@@ -149,6 +150,7 @@ function deleteTask(id) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({'_id': id}),
+    mode: 'no-cors'
   })
   .then(res => res.json())
   .then(data => {
@@ -172,6 +174,7 @@ function updateTask(id, task, done) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data),
+    mode: 'no-cors'
   })
   .then(res => res.json())
   .then(data => {
