@@ -24,6 +24,7 @@ const taskSchema = new mongoose.Schema({
 let Task = mongoose.model('Task', taskSchema);
 
 const getAllTasks = (weekStart, cb) => {
+  console.log('inside db.getAllTasks - weekstart :>> ', weekstart);
   Task.find(weekStart, ((err, result) => {
     if(err) {
       cb(err)
