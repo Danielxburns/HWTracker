@@ -120,7 +120,7 @@ function getTasks() {
 };
 
 async function postNewTask(subject, day, task) {
-  let data = {
+  const data = {
     subject: subject,
     day: day,
     createdOn: new Date(),
