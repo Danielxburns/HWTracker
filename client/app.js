@@ -1,3 +1,4 @@
+const fetch = require("node-fetch");
 
 const dt = new Date();
 
@@ -10,7 +11,7 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
-const url = 'https://peaceful-gorge-58758.herokuapp.com';
+const url = 'https://peaceful-gorge-58758.herokuapp.com'; 
 
 getTasks();
 
@@ -136,7 +137,7 @@ async function postNewTask(subject, day, task) {
     body: JSON.stringify(data),
     mode: 'no-cors',
   });
-  const taskData = await response.json();
+  const taskData = await response.json()
   console.log('Success! Posted to database: ', taskData);
   return taskData;
 /*     .catch(err => {
