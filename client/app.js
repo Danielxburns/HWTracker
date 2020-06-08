@@ -128,6 +128,7 @@ async function postNewTask(subject, day, task) {
     weekEnd: endWeek(new Date()),
     task: task,
   };
+  console.log('app.postNewTask data :>> ', data);
   const response = await fetch(`${url}/newTask`, {
     method: 'POST',
     headers: {
