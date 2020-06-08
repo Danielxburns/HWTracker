@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 
 const dt = new Date();
 
@@ -111,6 +110,7 @@ function edit(el) {
 function getTasks() {
   fetch(`${url}/getTasks`, {mode: 'no-cors'})
   .then(res => res.json())
+  .then(json=> console.log('inside app.getTasks json :>> ', json))
   .then(data => {
     populateCells(data);
   })
@@ -128,7 +128,6 @@ async function postNewTask(subject, day, task) {
     weekEnd: endWeek(new Date()),
     task: task,
   };
-  console.log('inside app.postNewTask data :>> ', data);
   const response = await fetch(`${url}/newTask`, {
     method: 'POST',
     headers: {
@@ -136,9 +135,9 @@ async function postNewTask(subject, day, task) {
     },
     body: JSON.stringify(data),
     mode: 'no-cors',
-  });
+  })
   const taskData = await response.json()
-  console.log('Success! Posted to database: ', taskData);
+/*   console.log('Success! Posted to database: ', taskData); */
   return taskData;
 /*     .catch(err => {
       console.error(err);
