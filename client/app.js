@@ -135,7 +135,7 @@ async function postNewTask(subject, day, task) {
     },
     body: JSON.stringify(data),
     mode: 'no-cors'
-  })
+  });
   const taskData = await response.json();
   console.log('Success! Posted to database: ', taskData);
   return taskData;
