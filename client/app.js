@@ -33,6 +33,7 @@ function endWeek(day) {
 };
 
 function populateCells(tasks) {
+  console.log('inside populateCells tasks :>> ', tasks);
   cells.forEach(cell => {
     const subj = cell.className;
     const day = cell.parentNode.className;
