@@ -28,6 +28,7 @@ console.log('inside server.app.get');
 
 app.post('/newTask', ((req, res) => {
   const task = req.body;
+  console.log('inside server.app.post "/newTask" task :>> ', task);
   db.postNewTask(task, (err, data) => {
     if(err) {
       res.status(500).send(err);
