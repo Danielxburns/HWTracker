@@ -132,12 +132,13 @@ async function postNewTask(subject, day, task) {
   const response = await fetch(`${url}/newTask`, {
     method: 'POST',
     headers: {
+      'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data),
     mode: 'no-cors',
-  })
-  const taskData = await response.json()
+  });
+  const taskData = await response.json();
   console.log('Success! Posted to database: ', taskData);
   return taskData;
 /*     .catch(err => {
