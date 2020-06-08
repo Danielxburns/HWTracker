@@ -134,7 +134,7 @@ async function postNewTask(subject, day, task) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
-    mode: 'no-cors'
+    mode: 'no-cors',
   });
   const taskData = await response.json();
   console.log('Success! Posted to database: ', taskData);
