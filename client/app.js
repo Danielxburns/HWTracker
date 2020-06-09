@@ -140,7 +140,7 @@ async function postNewTask(subject, day, task) {
   };
   console.log('app.postNewTask config :>> ', config);
   const request = new Request(`${url}/newTask`, config)
-  console.log('app.postNewTask request.headers:>> ', request.headers);
+  console.log('app.postNewTask request.clone().headers:>> ', request.clone().headers);
   const response = await fetch(request);
   try {
     const taskData = await response.json();
