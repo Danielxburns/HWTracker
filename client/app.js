@@ -139,7 +139,7 @@ async function postNewTask(subject, day, task) {
     mode: 'no-cors',
   }
   const request = new Request(`${url}/newTask`, config)
-  console.log('app.postNewTask request :>> ', request);
+  console.log('app.postNewTask request.body :>> ', request.body);
   const response = await fetch(request);
   const taskData = await response.json();
 /*   console.log('Success! Posted to database: ', taskData); */
