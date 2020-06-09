@@ -140,6 +140,7 @@ async function postNewTask(subject, day, task) {
   }
   console.log('app.postNewTask config :>> ', config);
   const response = await fetch(`${url}/newTask`, config);
+  console.log('response :>> ', response);
   const taskData = await response.json();
   console.log('Success! Posted to database: ', taskData);
   return taskData;
