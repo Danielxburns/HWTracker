@@ -128,14 +128,6 @@ async function postNewTask(subject, day, task) {
     weekEnd: endWeek(new Date()),
     task: task,
   };
-  const config = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data),
-  };
   const request = new Request(`${url}/newTask`, {
     method: 'POST',
     headers: {
@@ -144,10 +136,9 @@ async function postNewTask(subject, day, task) {
     },
     body: JSON.stringify(data),
   })
-  const response = await fetch(request);
   try {
+    const response = await fetch(request);
     const taskData = await response.json();
-    console.log('taskData :>> ', taskData);
     return taskData;
   } catch(err) {
     throw(err);
