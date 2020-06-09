@@ -133,11 +133,9 @@ async function postNewTask(subject, day, task) {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'mode': 'no-cors'
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
-    mode: 'no-cors'
+    body: JSON.stringify(data)
   };
   console.log('app.postNewTask config :>> ', config);
   const request = new Request(`${url}/newTask`, config)
