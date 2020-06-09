@@ -78,7 +78,7 @@ async function addNewTask(el) {
     if (assignment) {
       try {
         const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
-        console.log('inside addNewTask :>> ', newTask);
+        console.log('Success! Posted to database: ', newTask);
         return await displayTask(el, newTask);
       }
       catch(err) {
@@ -138,11 +138,10 @@ async function postNewTask(subject, day, task) {
     body: JSON.stringify(data),
     mode: 'no-cors',
   }
-  console.log('app.postNewTask config :>> ', config);
+/*   console.log('app.postNewTask config :>> ', config); */
   const response = await fetch(`${url}/newTask`, config);
-  await console.log('response :>> ', response.json());
   const taskData = await response.json();
-  console.log('Success! Posted to database: ', taskData);
+/*   console.log('Success! Posted to database: ', taskData); */
   return taskData;
 /*     .catch(err => {
       console.error(err);
