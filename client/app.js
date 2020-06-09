@@ -156,8 +156,7 @@ function deleteTask(id) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({'_id': id}),
-    mode: 'no-cors'
+    body: JSON.stringify({'_id': id})
   })
   .then(res => res.json())
   .then(data => {
@@ -180,8 +179,7 @@ function updateTask(id, task, done) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
-    mode: 'no-cors'
+    body: JSON.stringify(data)
   })
   .then(res => res.json())
   .then(data => {
