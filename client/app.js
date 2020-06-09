@@ -128,16 +128,18 @@ async function postNewTask(subject, day, task) {
     weekEnd: endWeek(new Date()),
     task: task,
   };
-  console.log('app.postNewTask data :>> ', data);
-  const response = await fetch(`${url}/newTask`, {
+  const config = {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'mode': 'no-cors'
     },
     body: JSON.stringify(data),
     mode: 'no-cors',
-  });
+  }
+  console.log('app.postNewTask config :>> ', config);
+  const response = await fetch(`${url}/newTask`, config);
   const taskData = await response.json();
   console.log('Success! Posted to database: ', taskData);
   return taskData;
