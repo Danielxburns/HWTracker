@@ -134,17 +134,22 @@ async function postNewTask(subject, day, task) {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'mode': 'no-cors'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(data),
-    mode: 'no-cors'
   };
-  console.log('app.postNewTask config :>> ', config);
-  const request = new Request(`${url}/newTask`, config)
-  console.log('app.postNewTask request.clone():>> ', request.clone());
+/*   console.log('app.postNewTask config :>> ', config); */
+  const request = new Request(`${url}/newTask`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  })
+/*   console.log('app.postNewTask request.clone():>> ', request.clone()); */
+  const response = await fetch(request);
   try {
-    const response = await fetch(request);
     const taskData = await response.json();
     console.log('taskData :>> ', taskData);
     return taskData;
@@ -159,8 +164,7 @@ function deleteTask(id) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({'_id': id}),
-    mode: 'no-cors'
+    body: JSON.stringify({'_id': id})
   })
   .then(res => res.json())
   .then(data => {
@@ -183,8 +187,7 @@ function updateTask(id, task, done) {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
-    mode: 'no-cors'
+    body: JSON.stringify(data)
   })
   .then(res => res.json())
   .then(data => {
