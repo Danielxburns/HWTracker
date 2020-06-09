@@ -138,6 +138,7 @@ async function postNewTask(subject, day, task) {
     body: JSON.stringify(data),
     mode: 'no-cors',
   }
+  console.log('app.postNewTask config :>> ', config);
   const request = new Request(`${url}/newTask`, config)
   console.log('app.postNewTask request.body :>> ', request.body);
   const response = await fetch(request);
