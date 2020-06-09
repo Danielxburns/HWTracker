@@ -136,11 +136,11 @@ async function postNewTask(subject, day, task) {
       'mode': 'no-cors'
     },
     body: JSON.stringify(data),
-    mode: 'no-cors',
-  }
+    mode: 'no-cors'
+  };
   console.log('app.postNewTask config :>> ', config);
   const request = new Request(`${url}/newTask`, config)
-  console.log('app.postNewTask request.clone() :>> ', request.clone());
+  console.log('app.postNewTask request.headers:>> ', request.headers);
   const response = await fetch(request);
   try {
     const taskData = await response.json();
