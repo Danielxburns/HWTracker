@@ -1,4 +1,4 @@
-
+const fetch = require("node-fetch");
 const dt = new Date();
 
 document.getElementById('week').innerHTML = ` ${startWeek(dt)} - ${endWeek(dt)}`;
