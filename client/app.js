@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 
 const dt = new Date();
 
@@ -137,7 +136,6 @@ async function postNewTask(subject, day, task) {
     },
     body: JSON.stringify(data),
   };
-/*   console.log('app.postNewTask config :>> ', config); */
   const request = new Request(`${url}/newTask`, {
     method: 'POST',
     headers: {
@@ -146,7 +144,6 @@ async function postNewTask(subject, day, task) {
     },
     body: JSON.stringify(data),
   })
-/*   console.log('app.postNewTask request.clone():>> ', request.clone()); */
   const response = await fetch(request);
   try {
     const taskData = await response.json();
