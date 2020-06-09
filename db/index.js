@@ -35,6 +35,7 @@ const getAllTasks = (weekStart, cb) => {
 };
 
 const postNewTask = (task, cb) => {
+  console.log('inside db.postNewTask task :>> ', task);
   const newTask = new Task(task);
   newTask.save((err, result) => {
     if(err) { 
