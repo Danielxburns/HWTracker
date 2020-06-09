@@ -143,8 +143,8 @@ async function postNewTask(subject, day, task) {
   console.log('app.postNewTask config :>> ', config);
   const request = new Request(`${url}/newTask`, config)
   console.log('app.postNewTask request.clone():>> ', request.clone());
-  const response = await fetch(request);
   try {
+    const response = await fetch(request);
     const taskData = await response.json();
     console.log('taskData :>> ', taskData);
     return taskData;
