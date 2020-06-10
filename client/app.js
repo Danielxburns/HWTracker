@@ -77,7 +77,6 @@ async function addNewTask(el) {
     if (assignment) {
       try {
         const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
-        /* console.log('Success! Posted to database: ', newTask); */
         return await displayTask(el, newTask);
       }
       catch(err) {
@@ -108,7 +107,7 @@ function edit(el) {
 
 
 function getTasks() {
-  fetch(`${url}/getTasks`, {mode: 'no-cors'})
+  fetch(`${url}/getTasks`)
   .then(res => res.json())
   .then(data => {
     populateCells(data);
