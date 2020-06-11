@@ -17,7 +17,6 @@ app.get('/getTasks', ((req, res) => {
   const today = new Date();
   const diff = today.getDate() - today.getDay() + (today.getDay()? 0 : -6);
   const weekStart = new Date(today.setDate(diff)).toLocaleDateString();
-console.log('inside server.app.get');
   db.getAllTasks({ "weekStart": weekStart }, (err, data) => {
     if(err) {
       res.status(500).send(err)
@@ -29,7 +28,6 @@ console.log('inside server.app.get');
 
 app.post('/newTask', ((req, res) => {
   const task = req.body;
-  console.log('inside server.app.post "/newTask" req.body :>> ', req.body);
   db.postNewTask(task, (err, data) => {
     if(err) {
       res.status(500).send(err);

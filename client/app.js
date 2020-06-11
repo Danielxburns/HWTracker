@@ -175,9 +175,6 @@ function updateTask(id, task, done) {
     body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(data => {
-    console.log('Updated task: ', JSON.stringify(data.task));
-  })
   .catch(err => {
     console.error(err);
   })
