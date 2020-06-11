@@ -24,8 +24,8 @@ h1, h2 {
 }
 
 h3 {
+  font-family: 'Balsamiq Sans', cursive;
   text-align: center;
-  font-family: 'Courier New', Courier, monospace;
 }
 
 .frame {
@@ -60,7 +60,7 @@ table {
   width: 100%;
   border: 4px solid black;
   border-collapse: collapse;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'Balsamiq Sans', cursive;
 }
 
 th, tfoot {

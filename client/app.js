@@ -10,7 +10,7 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
-const url = 'https://peaceful-gorge-58758.herokuapp.com'; 
+const url = 'https://peaceful-gorge-58758.herokuapp.com'; /* 'http://localhost:3000'; */
 
 getTasks();
 
@@ -49,8 +49,8 @@ function displayTask(cell, task) {
   checkBox.type = "checkbox";
   if(task.done) { checkBox.checked = true }
   const label = document.createElement("label");
-  label.for = checkBox; // REVIEW does this need to be tied to an id?
-  if(task) { // don't do anything if there is no task entered
+  label.for = checkBox;
+  if(task) {
     label.appendChild(document.createTextNode(task.task))
     label.className = 'text';
     label.setAttribute('data-text', task.task)
