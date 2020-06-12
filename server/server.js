@@ -3,7 +3,6 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const db = require('../db/index.js');
-/* const [ images ] = require('/images/'); */
 const fs = require('fs')
 
 const app = express();
@@ -62,7 +61,6 @@ app.put('/updateTask', ((req, res) => {
 
 app.get('/background', (req, res) => {
   fs.readdir(path.join(__dirname, '/../client/images'), (err, files) => {
-      console.log('inside server.getImages files :>> ', files);
       res.send(files);
   });
 });

@@ -10,7 +10,7 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
-const url = /* 'https://peaceful-gorge-58758.herokuapp.com'; */ 'http://localhost:3000';
+const url = 'https://peaceful-gorge-58758.herokuapp.com'; /* 'http://localhost:3000'; */
 const backgrounds = [];
 
 getTasks()
