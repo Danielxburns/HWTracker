@@ -10,9 +10,12 @@ cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
-const url = 'https://peaceful-gorge-58758.herokuapp.com'; /* 'http://localhost:3000'; */
+const url = /* 'https://peaceful-gorge-58758.herokuapp.com'; */ 'http://localhost:3000';
+const backgrounds = [];
 
-getTasks();
+getTasks()
+getBackgrounds();
+
 
 /* ------------- ANCHOR UTILS ------------ */
 
@@ -72,6 +75,20 @@ function handleClick(e) {
   }
 };
 
+function handleBackground() {
+  // seems like there should be an easier way to do this
+  const bodyStyles = this.getComputedStyle(document.querySelector('body'));
+  const url = bodyStyles.backgroundImage.slice(5, -2);
+  const file = url.split('/').pop();
+  let index = backgrounds.indexOf(file)
+  if(index >= backgrounds.length - 1) {
+    index = -1
+  }
+  const nextFile = backgrounds[index + 1]
+  const nextURL = url.replace(file, nextFile);
+  document.querySelector('body').style.backgroundImage = `url(${nextURL})`;
+}
+
 async function addNewTask(el) {
     const assignment = prompt('add an assignment');
     if (assignment) {
@@ -116,6 +133,19 @@ function getTasks() {
     console.error(JSON.stringify(err)); // TODO handle gracefully 
   })
 };
+
+async function getBackgrounds() {
+  // get request to images collection
+  const data = await fetch(`${url}/background`);
+  images = await data.json();
+  images.forEach(image => {
+    backgrounds.push(image);
+  })
+  console.log('backgrounds:', backgrounds);
+  // if new POST request to images collection returning the image
+
+  /* document.body.style.backgroundImage=`url(${image.text()})`; */
+}
 
 async function postNewTask(subject, day, task) {
   const data = {

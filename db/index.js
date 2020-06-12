@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const db = mongoose.connection;
 
-let uri = 'mongodb://heroku_40smgss9:hsps39cdhdebtrtvvldj15dl4b@ds019856.mlab.com:19856/heroku_40smgss9'; /* 'mongodb://localhost/hw'; */
+let uri = /* 'mongodb://heroku_40smgss9:hsps39cdhdebtrtvvldj15dl4b@ds019856.mlab.com:19856/heroku_40smgss9'; */ 'mongodb://localhost/hw';
 
 mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true, 'useFindAndModify': false});
 

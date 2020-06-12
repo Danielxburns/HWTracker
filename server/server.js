@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const db = require('../db/index.js');
+/* const [ images ] = require('/images/'); */
+const fs = require('fs')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -55,3 +57,12 @@ app.put('/updateTask', ((req, res) => {
     res.json(data);
   } })
 }));
+
+/* ------------ ANCHOR IMAGES ------------ */
+
+app.get('/background', (req, res) => {
+  fs.readdir(path.join(__dirname, '/../client/images'), (err, files) => {
+      console.log('inside server.getImages files :>> ', files);
+      res.send(files);
+  });
+});
