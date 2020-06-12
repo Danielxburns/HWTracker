@@ -135,16 +135,12 @@ function getTasks() {
 };
 
 async function getBackgrounds() {
-  // get request to images collection
   const data = await fetch(`${url}/background`);
   images = await data.json();
   images.forEach(image => {
     backgrounds.push(image);
   })
-  console.log('backgrounds:', backgrounds);
   // if new POST request to images collection returning the image
-
-  /* document.body.style.backgroundImage=`url(${image.text()})`; */
 }
 
 async function postNewTask(subject, day, task) {
