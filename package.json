@@ -1,10 +1,11 @@
 {
-  "name": "HWTracker",
+  "name": "hwtracker",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server/server.js",
+    "start": "node server/server.js",
+    "start-dev": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -12,7 +13,7 @@
     "url": "git+https://github.com/Danielxburns/HWTracker.git"
   },
   "keywords": [],
-  "author": "Daniel Burns <danielburnsart@gmail.com> (burnsart.com)",
+  "author": "Daniel Burns <danielburnstech@gmail.com> (www.danielburns.info)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Danielxburns/HWTracker/issues"
