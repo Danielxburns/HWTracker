@@ -7,7 +7,12 @@ body {
   color: navy;
 }
 
-#title {
+header {
+  display: flex;
+  flex-direction: row;
+}
+
+section {
   background-color: rgb(241, 241, 227);
   border: 10px ridge lightgray;
   border-radius: 10px;
