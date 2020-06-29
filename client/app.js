@@ -1,33 +1,32 @@
 
-const dt = new Date();
-
-document.getElementById('week').innerHTML = ` ${startWeek(dt)} - ${endWeek(dt)}`;
-
-document.getElementById('today').innerHTML = getToday(dt);
-
+const url = 'http://localhost:3000';
+let dayInWeek;
 const cells = document.querySelectorAll('td');
 cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
 
-const url = 'http://localhost:3000';
-
-getTasks();
 
 /* ------------- ANCHOR UTILS ------------ */
 
-function getToday(day) {
-  const dayOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][day.getDay()];
-  const dateString = day.toDateString();
-  return `${dayOfWeek} ${dateString.substring(3, dateString.length - 5)}, ${day.getFullYear()}`;
-}
+function getToday() {
+  const now = new Date();
+  const dayOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][now.getDay()];
+  const dateString = now.toDateString();
+  return `${dayOfWeek} ${dateString.substring(3, dateString.length - 5)}, ${now.getFullYear()}`;
+};
 
-function startWeek(day) {
+function setWeek(day) {
+  document.getElementById('week').innerHTML = ` ${startOfWeek(day)} - ${endOfWeek(day)}`;
+  return dayInWeek = day;
+};
+
+function startOfWeek(day) {
   const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : -6);
   return new Date(day.setDate(diff)).toLocaleDateString();
 };
 
-function endWeek(day) {
+function endOfWeek(day) {
   const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : 6);
   return new Date(day.setDate(diff)).toLocaleDateString();
 };
@@ -103,10 +102,18 @@ function edit(el) {
   }
 };
 
+function changeWeek(dir) {
+  if (dir === "weekPrev") {
+    dayInWeek = new Date(dayInWeek.getTime() - 7 * 24 * 60 * 60 * 1000)
+  } else if (dir === "weekNext") {
+    dayInWeek = new Date(dayInWeek.getTime() + 7 * 24 * 60 * 60 * 1000)
+  }
+  setWeek(dayInWeek);
+};
+
 /* ------------- ANCHOR SERVER CALLS ------------ */
 
-
-function getTasks() {
+function getTasks(weekBegin) {
   fetch(`${url}/getTasks`, {mode: 'cors'})
   .then(res => res.json())
   .then(data => {
@@ -122,8 +129,8 @@ async function postNewTask(subject, day, task) {
     subject: subject,
     day: day,
     createdOn: new Date(),
-    weekStart: startWeek(new Date()),
-    weekEnd: endWeek(new Date()),
+    weekStart: startOfWeek(new Date()),
+    weekEnd: endOfWeek(new Date()),
     task: task,
   };
   const response = await fetch(`${url}/newTask`, {
@@ -181,3 +188,6 @@ function updateTask(id, task, done) {
   })
 };
 
+document.getElementById('today').innerHTML = getToday();
+setWeek(new Date());
+getTasks();

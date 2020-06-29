@@ -9,12 +9,16 @@
 </head>
 <body>
   <header>
-    <section>background</section>
+    <section id="setBkgr">background</section>
     <section id="title">
       <h1>Thomas Burns Homework App</h1>
-      <h2>Week of: <span id="week"></span></h2>
+      <h2>
+        <button id="weekPrev" onclick="changeWeek(id)">◄</button>
+        Week of: <span id="week"></span>
+        <button id="weekNext" onclick="changeWeek(id)">►</button>
+      </h2>
     </section>
-    <section>points</section>
+    <section id=points>points</section>
   </header>
   <div class="frame">
     <h3>Today is: <span id="today"></span></h3>
