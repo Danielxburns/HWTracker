@@ -1,11 +1,8 @@
 
 const url = 'http://localhost:3000';
-let dayInWeek;
 const cells = document.querySelectorAll('td');
-cells.forEach(cell => {
-  cell.addEventListener('click', handleClick);
-});
-
+const changeWeekButtons = document.querySelectorAll('.change-week-button')
+let dayInWeek;
 
 /* ------------- ANCHOR UTILS ------------ */
 
@@ -48,8 +45,8 @@ function displayTask(cell, task) {
   checkBox.type = "checkbox";
   if(task.done) { checkBox.checked = true }
   const label = document.createElement("label");
-  label.for = checkBox; // REVIEW does this need to be tied to an id?
-  if(task) { // don't do anything if there is no task entered
+  label.for = checkBox;
+  if(task) {
     label.appendChild(document.createTextNode(task.task))
     label.className = 'text';
     label.setAttribute('data-text', task.task)
@@ -102,10 +99,11 @@ function edit(el) {
   }
 };
 
-function changeWeek(dir) {
-  if (dir === "weekPrev") {
+function changeWeek(direction) {
+  console.log('inside changeWeek direction :>> ', direction);
+  if (direction === "weekPrev") {
     dayInWeek = new Date(dayInWeek.getTime() - 7 * 24 * 60 * 60 * 1000)
-  } else if (dir === "weekNext") {
+  } else if (direction === "weekNext") {
     dayInWeek = new Date(dayInWeek.getTime() + 7 * 24 * 60 * 60 * 1000)
   }
   setWeek(dayInWeek);
@@ -188,6 +186,20 @@ function updateTask(id, task, done) {
   })
 };
 
+cells.forEach(cell => {
+  cell.addEventListener('click', handleClick);
+});
+
+
 document.getElementById('today').innerHTML = getToday();
 setWeek(new Date());
 getTasks();
+
+document.addEventListener('click', (e) => console.log('e.target :>> ', e.target));
+
+/* changeWeekButtons.forEach(button => {
+  button.addEventListener('click', () => changeWeek(button.id))
+});
+
+
+console.log(changeWeekButtons); */

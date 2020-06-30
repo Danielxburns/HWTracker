@@ -1,91 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thomas Burns Homework Tracker</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-
-</head>
-<body>
-  <header>
-    <section id="setBkgr">background</section>
-    <section id="title">
-      <h1>Thomas Burns Homework App</h1>
-      <h2>
-        <button id="weekPrev" onclick="changeWeek(id)">◄</button>
-        Week of: <span id="week"></span>
-        <button id="weekNext" onclick="changeWeek(id)">►</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thomas Burns Homework Tracker</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <section id="setBkgr">background</section>
+      <section id="title">
+        <h1>Thomas Burns Homework App</h1>
+        <h3>Today is: <span id="today"></span></h3>
+      </section>
+      <section id="points">points</section>
+    </header>
+    <div class="frame">
+      <h2>Assignments for week of:<br/>
+        <button class="change-week-button" id="weekPrev" onclick="changeWeek(id)">◄</button>
+        <span id="week"></span>
+        <button class="change-week-button" id="weekNext" onclick="changeWeek(id)">►</button>
       </h2>
-    </section>
-    <section id=points>points</section>
-  </header>
-  <div class="frame">
-    <h3>Today is: <span id="today"></span></h3>
-    <table>
-      <thead>
-        <tr>
-          <th rowspan="2"></th>
-          <th rowspan="2">Math</th>
-          <th colspan="2">ELA</th>
-          <th rowspan="2">Science</th>
-          <th rowspan="2">Social Studies</th>
-        </tr>
-        <tr>
-          <th>Reading</th> 
-          <th>Writing</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="Monday">
-          <th>Monday</th>
-          <td class="math"></td>
-          <td class="ela reading"></td>
-          <td class="ela writing"></td>
-          <td class="science"></td>
-          <td class="social-studies"></td>
-        </tr>
-        <tr class="Tuesday">
-          <th>Tuesday</th>
-          <td class="math"></td>
-          <td class="ela reading"></td>
-          <td class="ela writing"></td>
-          <td class="science"></td>
-          <td class="social-studies"></td>
-        </tr>
-        <tr class="Wednesday">
-          <th>Wednesday</th>
-          <td class="math"></td>
-          <td class="ela reading"></td>
-          <td class="ela writing"></td>
-          <td class="science"></td>
-          <td class="social-studies"></td>
-        </tr>
-        <tr class="Thursday">
-          <th>Thursday</th>
-          <td class="math"><ul></ul></td>
-          <td class="ela reading"></td>
-          <td class="ela writing"></td>
-          <td class="science"></td>
-          <td class="social-studies"></td>
-        </tr>
-        <tr class="Friday">
-          <th>Friday</th>
-          <td class="math"></td>
-          <td class="ela reading"></td>
-          <td class="ela writing"></td>
-          <td class="science"></td>
-          <td class="social-studies"></td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th>notes:</th>
-          <td class="notes" colspan="5"></td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>  
-  <script src="app.js"></script>
-</body>
+      <table>
+        <thead>
+          <tr>
+            <th rowspan="2"></th>
+            <th rowspan="2">Math</th>
+            <th colspan="2">ELA</th>
+            <th rowspan="2">Science</th>
+            <th rowspan="2">Social Studies</th>
+          </tr>
+          <tr>
+            <th>Reading</th>
+            <th>Writing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="Monday">
+            <th>Monday</th>
+            <td class="math"></td>
+            <td class="ela reading"></td>
+            <td class="ela writing"></td>
+            <td class="science"></td>
+            <td class="social-studies"></td>
+          </tr>
+          <tr class="Tuesday">
+            <th>Tuesday</th>
+            <td class="math"></td>
+            <td class="ela reading"></td>
+            <td class="ela writing"></td>
+            <td class="science"></td>
+            <td class="social-studies"></td>
+          </tr>
+          <tr class="Wednesday">
+            <th>Wednesday</th>
+            <td class="math"></td>
+            <td class="ela reading"></td>
+            <td class="ela writing"></td>
+            <td class="science"></td>
+            <td class="social-studies"></td>
+          </tr>
+          <tr class="Thursday">
+            <th>Thursday</th>
+            <td class="math"><ul></ul></td>
+            <td class="ela reading"></td>
+            <td class="ela writing"></td>
+            <td class="science"></td>
+            <td class="social-studies"></td>
+          </tr>
+          <tr class="Friday">
+            <th>Friday</th>
+            <td class="math"></td>
+            <td class="ela reading"></td>
+            <td class="ela writing"></td>
+            <td class="science"></td>
+            <td class="social-studies"></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>notes:</th>
+            <td class="notes" colspan="5"></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <script src="app.js"></script>
+  </body>
 </html>
