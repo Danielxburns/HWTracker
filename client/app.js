@@ -14,26 +14,31 @@ function getToday() {
 };
 
 function setWeek(day) {
-  document.getElementById('week').innerHTML = ` ${startOfWeek(day)} - ${endOfWeek(day)}`;
+  document.getElementById('week').innerHTML = ` ${startOfWeek(day)} to ${endOfWeek(day)}`;
+  console.log('inside setWeek - day :>> ', day);
+  getTasks(startOfWeek(day));
   return dayInWeek = day;
 };
 
 function startOfWeek(day) {
-  const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : -6);
-  return new Date(day.setDate(diff)).toLocaleDateString();
+  let clone = new Date(day);
+  const diff = clone.getDate() - clone.getDay() + (clone.getDay()? 0 : -6);
+  return new Date(clone.setDate(diff)).toLocaleDateString();
 };
 
 function endOfWeek(day) {
-  const diff = day.getDate() - day.getDay() + (day.getDay()? 0 : 6);
-  return new Date(day.setDate(diff)).toLocaleDateString();
+  let clone = new Date(day);
+  const diff = clone.getDate() - clone.getDay() + (clone.getDay()? 6 : 0);
+  return new Date(clone.setDate(diff)).toLocaleDateString();
 };
 
 function populateCells(tasks) {
   cells.forEach(cell => {
+    cell.innerHTML = '';
     const subj = cell.className;
     const day = cell.parentNode.className;
     const tasksOfTheDay = tasks.filter(task => (task.subject === subj && task.day === day));
-    tasksOfTheDay.forEach(task => displayTask(cell, task));
+    tasksOfTheDay.forEach(task => displayTask(cell, task)); 
   })
 }
 
@@ -101,18 +106,21 @@ function edit(el) {
 
 function changeWeek(direction) {
   console.log('inside changeWeek direction :>> ', direction);
+  console.log('inside changeWeek - dayInWeek :>> ', dayInWeek);
   if (direction === "weekPrev") {
     dayInWeek = new Date(dayInWeek.getTime() - 7 * 24 * 60 * 60 * 1000)
   } else if (direction === "weekNext") {
     dayInWeek = new Date(dayInWeek.getTime() + 7 * 24 * 60 * 60 * 1000)
   }
+  console.log('inside changeWeek - dayInWeek :>> ', dayInWeek);
   setWeek(dayInWeek);
 };
 
 /* ------------- ANCHOR SERVER CALLS ------------ */
 
-function getTasks(weekBegin) {
-  fetch(`${url}/getTasks`, {mode: 'cors'})
+function getTasks(day) {
+  const weekBegin = day.replace(/\//g, "-");
+  fetch(`${url}/getTasks/${weekBegin}`, {mode: 'cors'})
   .then(res => res.json())
   .then(data => {
     populateCells(data);
@@ -193,13 +201,4 @@ cells.forEach(cell => {
 
 document.getElementById('today').innerHTML = getToday();
 setWeek(new Date());
-getTasks();
-
-document.addEventListener('click', (e) => console.log('e.target :>> ', e.target));
-
-/* changeWeekButtons.forEach(button => {
-  button.addEventListener('click', () => changeWeek(button.id))
-});
-
-
-console.log(changeWeekButtons); */
+console.log('line 201 - dayInWeek :>> ', dayInWeek);

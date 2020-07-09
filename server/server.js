@@ -12,10 +12,8 @@ app.use('/', express.static(path.join(__dirname, '/../client')));
 
 app.listen(port, ()=> console.log(`listening on port ${port}.`));
 
-app.get('/getTasks', ((req, res) => {
-  const today = new Date();
-  const diff = today.getDate() - today.getDay() + (today.getDay()? 0 : -6);
-  const weekStart = new Date(today.setDate(diff)).toLocaleDateString();
+app.get('/getTasks/:wkStart', ((req, res) => {
+  const weekStart = req.params.wkStart.replace(/-/g, "/");
   db.getAllTasks({ "weekStart": weekStart }, (err, data) => {
     if(err) {
       res.status(500).send(err)
