@@ -113,6 +113,10 @@ th:first-child {
   cursor: pointer;
 }
 
+input[type=checkbox]:checked + label.text {
+  text-decoration: line-through;
+}
+
 label:hover::after {
   content:attr(data-text);
   overflow: visible;

@@ -21,6 +21,16 @@ const taskSchema = new mongoose.Schema({
   done: Boolean
 });
 
+const userschema = new mongoose.Schema({
+  username: String,
+  password: String,
+  points: Number,
+  backgrounds: {
+    name: String,
+    url: String
+  }
+})
+
 let Task = mongoose.model('Task', taskSchema);
 
 const getAllTasks = (weekStart, cb) => {
