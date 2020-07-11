@@ -8,19 +8,23 @@
   </head>
   <body>
     <header>
-      <section id="bgSelect">background</section>
+      <section id="bgSelect"><u>Background</u></section>
       <section id="title">
         <h1>Thomas Burns Homework App</h1>
         <h3>Today is: <span id="today"></span></h3>
       </section>
-      <section id="points">points</section>
+      <section id="score"><u>Points</u>
+        <div id="points">0</div>
+      </section>
     </header>
     <div class="frame">
-      <h2>Assignments for week of:<br/>
-        <button class="change-week-button" id="weekPrev" onclick="changeWeek(id)">◄</button>
-        <span id="week"></span>
-        <button class="change-week-button" id="weekNext" onclick="changeWeek(id)">►</button>
-      </h2>
+      <div id="weekof">
+        <h2>Assignments for week of:<br/>
+          <button class="change-week-button" id="weekPrev" onclick="changeWeek(id)">◄</button>
+          <span id="week"></span>
+          <button class="change-week-button" id="weekNext" onclick="changeWeek(id)">►</button>
+        </h2>
+      </div>
       <table>
         <thead>
           <tr>

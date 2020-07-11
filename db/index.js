@@ -21,17 +21,19 @@ const taskSchema = new mongoose.Schema({
   done: Boolean
 });
 
-const userschema = new mongoose.Schema({
+let Task = mongoose.model('Task', taskSchema);
+
+const userSchema = new mongoose.Schema({
   username: String,
-  password: String,
+/*   password: String, */
   points: Number,
-  backgrounds: {
+  /* backgrounds: {
     name: String,
     url: String
-  }
-})
+  } */
+});
 
-let Task = mongoose.model('Task', taskSchema);
+let User = mongoose.model('User', userSchema);
 
 const getAllTasks = (weekStart, cb) => {
   Task.find(weekStart, ((err, result) => {
@@ -65,6 +67,7 @@ const deleteTask = (id, cb) => {
 };
 
 const updateTask = async (data, cb) => {
+  // query Users table to update points? mongoose hooks?
   const query = await Task.findOne({"_id": data._id});
   query.task = data.task;
   query.done = data.done;
@@ -78,4 +81,16 @@ const updateTask = async (data, cb) => {
   });
 };
 
-module.exports = { getAllTasks, postNewTask, deleteTask, updateTask };
+const updatePoints = async (data, cb) => {
+  const query = await User.findOne({"username": data.username});
+  query.points = data.points;
+  query.save((err, result) => {
+    if(err) {
+      cb(err);
+    } else {
+      cb(null, result);
+    }
+  })
+}
+
+module.exports = { getAllTasks, postNewTask, deleteTask, updateTask, updatePoints };

@@ -65,6 +65,9 @@ function displayTask(cell, task) {
 
 function handleClick(e) {
   if(e.target.type === 'checkbox') {
+    let points = document.getElementById('points')
+    e.target.checked ? points.innerHTML++ : points.innerHTML--
+    updatePoints('Thomas', points.innerHTML)
     return updateTask(e.target.parentNode._id, e.target.nextSibling.dataset.text, e.target.checked);
   } else if (e.target.className === 'text') {
     return (e.shiftKey) ? remove(e.target) : edit(e.target)
@@ -186,8 +189,30 @@ function updateTask(id, task, done) {
     body: JSON.stringify(data),
   })
   .then(res => res.json())
-  .then(data => {
+/*   .then(data => {
     console.log('Updated task: ', JSON.stringify(data.task));
+  }) */
+  .catch(err => {
+    console.error(err);
+  })
+};
+
+function updatePoints(username, points) {
+  let data = {
+    username: username,
+    points: points,
+    modifiedOn: new Date(),
+  };
+  fetch(`${url}/updatePoints`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data),
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log('Updated points: ', JSON.stringify([data.username, data.points]));
   })
   .catch(err => {
     console.error(err);
@@ -201,4 +226,4 @@ cells.forEach(cell => {
 
 document.getElementById('today').innerHTML = getToday();
 setWeek(new Date());
-console.log('line 201 - dayInWeek :>> ', dayInWeek);
+

@@ -14,6 +14,7 @@ app.listen(port, ()=> console.log(`listening on port ${port}.`));
 
 app.get('/getTasks/:wkStart', ((req, res) => {
   const weekStart = req.params.wkStart.replace(/-/g, "/");
+  
   db.getAllTasks({ "weekStart": weekStart }, (err, data) => {
     if(err) {
       res.status(500).send(err)
@@ -46,9 +47,20 @@ app.delete('/deleteTask', ((req, res) => {
 
 app.put('/updateTask', ((req, res) => {
   db.updateTask(req.body, (err, data) => {
+      if(err) {
+      res.status(500).send(err);
+    } else {
+      res.json(data);
+    }
+  })
+}));
+
+app.put('/updatePoints', ((req, res) => {
+  db.updatePoints(req.body, (err, data) => {
     if(err) {
-    res.status(500).send(err);
-  } else {
-    res.json(data);
-  } })
+      res.status(500).send(err);
+    } else {
+      res.json(data)
+    }
+  })
 }));
