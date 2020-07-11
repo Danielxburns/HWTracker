@@ -3,6 +3,15 @@ const url = 'http://localhost:3000';
 const cells = document.querySelectorAll('td');
 const changeWeekButtons = document.querySelectorAll('.change-week-button')
 let dayInWeek;
+const user = {
+  username: "Thomas",
+  bgList: {
+    bunnies: '/images/bunny.png',
+    bricks: 'https://mocah.org/uploads/posts/5378508-wall-brick-red-pattern-abstract-urban-city-background-free-images.jpg',
+    cave_painting: 'https://previews.123rf.com/images/shootdiem/shootdiem1705/shootdiem170500023/77329699-cave-painting-seamless-pattern-hunting-scene-background-.jpg',
+    burnt_wood: 'http://wallpoper.com/images/00/28/33/50/wood_00283350.jpg'
+  }
+}
 
 /* ------------- ANCHOR UTILS ------------ */
 
@@ -117,6 +126,13 @@ function changeWeek(direction) {
   }
   console.log('inside changeWeek - dayInWeek :>> ', dayInWeek);
   setWeek(dayInWeek);
+};
+
+function changeBg(name) {
+  const url = user.bgList[name]
+  console.log(url);
+  const body = document.getElementsByTagName('body')[0];
+  body.style.backgroundImage = `url(${url})`;
 };
 
 /* ------------- ANCHOR SERVER CALLS ------------ */

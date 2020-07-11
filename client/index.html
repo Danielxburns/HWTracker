@@ -8,7 +8,15 @@
   </head>
   <body>
     <header>
-      <section id="bgSelect"><u>Background</u></section>
+      <section id="bgSelect">
+        <label for="bg"><u>Background</u></label><br>
+        <select id="bg" name="background" onchange="changeBg(this.value)">
+          <option value="bunnies">bunnies</option>
+          <option value="bricks">bricks</option>
+          <option value="cave_painting">cave painting</option>
+          <option value="burnt_wood">burnt wood</option>
+        </select>
+      </section>
       <section id="title">
         <h1>Thomas Burns Homework App</h1>
         <h3>Today is: <span id="today"></span></h3>
