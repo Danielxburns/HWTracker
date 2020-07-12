@@ -81,8 +81,17 @@ const updateTask = async (data, cb) => {
   });
 };
 
+const getUserData = (user, cb) => {
+  User.findOne(user, ((err, result) => {
+    if(err) {
+      cb(err)
+    } else {
+      cb(null, result);
+    }
+  }));
+};
 const updatePoints = async (data, cb) => {
-  const query = await User.findOne({"username": data.username});
+  const query = await User.findOne({ username: data.username });
   query.points = data.points;
   query.save((err, result) => {
     if(err) {
@@ -90,7 +99,7 @@ const updatePoints = async (data, cb) => {
     } else {
       cb(null, result);
     }
-  })
-}
+  });
+};
 
-module.exports = { getAllTasks, postNewTask, deleteTask, updateTask, updatePoints };
+module.exports = { getAllTasks, postNewTask, deleteTask, updateTask, getUserData, updatePoints };

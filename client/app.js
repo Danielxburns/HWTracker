@@ -74,9 +74,10 @@ function displayTask(cell, task) {
 
 function handleClick(e) {
   if(e.target.type === 'checkbox') {
-    let points = document.getElementById('points')
-    e.target.checked ? points.innerHTML++ : points.innerHTML--
-    updatePoints('Thomas', points.innerHTML)
+    let currPoints = document.getElementById('points').innerHTML;
+    e.target.checked ? currPoints++ : currPoints--
+    updatePoints('Thomas', currPoints);
+    document.getElementById("points").innerHTML = currPoints
     return updateTask(e.target.parentNode._id, e.target.nextSibling.dataset.text, e.target.checked);
   } else if (e.target.className === 'text') {
     return (e.shiftKey) ? remove(e.target) : edit(e.target)
@@ -128,7 +129,6 @@ function changeWeek(direction) {
 
 function changeBg(name) {
   const image = user.bgList[name]
-  console.log(image);
   const body = document.getElementsByTagName('body')[0];
   body.style.backgroundImage = `url(${image})`;
 };
@@ -211,6 +211,15 @@ function updateTask(id, task, done) {
   })
 };
 
+function getUserData(user) {
+  fetch(`${url}/getUserData/${user}`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('points').innerHTML = data.points;
+  })
+  .catch(err => console.error(err))
+}
+
 function updatePoints(username, points) {
   let data = {
     username: username,
@@ -233,11 +242,10 @@ function updatePoints(username, points) {
   })
 };
 
+document.getElementById('today').innerHTML = getToday();
+getUserData("Thomas");
+setWeek(new Date());
+
 cells.forEach(cell => {
   cell.addEventListener('click', handleClick);
 });
-
-
-document.getElementById('today').innerHTML = getToday();
-setWeek(new Date());
-

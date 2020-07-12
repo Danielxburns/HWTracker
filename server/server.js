@@ -55,6 +55,17 @@ app.put('/updateTask', ((req, res) => {
   })
 }));
 
+app.get('/getUserData/:user', ((req, res) => {
+  const user = {"username": req.params.user};
+    db.getUserData(user, (err, data) => {
+    if(err) {
+      res.status(500).send(err)
+    } else {
+      res.json(data);
+    }
+  })
+}));
+
 app.put('/updatePoints', ((req, res) => {
   db.updatePoints(req.body, (err, data) => {
     if(err) {
