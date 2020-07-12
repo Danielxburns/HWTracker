@@ -7,9 +7,10 @@ const user = {
   username: "Thomas",
   bgList: {
     bunnies: '/images/bunny.png',
-    bricks: 'https://mocah.org/uploads/posts/5378508-wall-brick-red-pattern-abstract-urban-city-background-free-images.jpg',
-    cave_painting: 'https://previews.123rf.com/images/shootdiem/shootdiem1705/shootdiem170500023/77329699-cave-painting-seamless-pattern-hunting-scene-background-.jpg',
-    burnt_wood: 'http://wallpoper.com/images/00/28/33/50/wood_00283350.jpg'
+    bricks: '/images/bricks.jpg',
+    cave_painting: '/images/cave_painting.jpg',
+    burnt_wood: '/images/burnt_wood.jpg',
+    kealing: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/787c7134862611.56f1bac606f4f.png'
   }
 }
 
@@ -129,10 +130,10 @@ function changeWeek(direction) {
 };
 
 function changeBg(name) {
-  const url = user.bgList[name]
-  console.log(url);
+  const image = user.bgList[name]
+  console.log(image);
   const body = document.getElementsByTagName('body')[0];
-  body.style.backgroundImage = `url(${url})`;
+  body.style.backgroundImage = `url(${image})`;
 };
 
 /* ------------- ANCHOR SERVER CALLS ------------ */
