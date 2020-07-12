@@ -25,20 +25,19 @@ function getToday() {
 
 function setWeek(day) {
   document.getElementById('week').innerHTML = ` ${startOfWeek(day)} to ${endOfWeek(day)}`;
-  console.log('inside setWeek - day :>> ', day);
   getTasks(startOfWeek(day));
   return dayInWeek = day;
 };
 
 function startOfWeek(day) {
   let clone = new Date(day);
-  const diff = clone.getDate() - clone.getDay() + (clone.getDay()? 0 : -6);
+  const diff = clone.getDate() - clone.getDay() + (clone.getDay()? -6 : 0);
   return new Date(clone.setDate(diff)).toLocaleDateString();
 };
 
 function endOfWeek(day) {
   let clone = new Date(day);
-  const diff = clone.getDate() - clone.getDay() + (clone.getDay()? 6 : 0);
+  const diff = clone.getDate() - clone.getDay() + (clone.getDay()? 0 : 6);
   return new Date(clone.setDate(diff)).toLocaleDateString();
 };
 
