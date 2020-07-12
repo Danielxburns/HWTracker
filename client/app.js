@@ -117,8 +117,6 @@ function edit(el) {
 };
 
 function changeWeek(direction) {
-  console.log('inside changeWeek direction :>> ', direction);
-  console.log('inside changeWeek - dayInWeek :>> ', dayInWeek);
   if (direction === "weekPrev") {
     dayInWeek = new Date(dayInWeek.getTime() - 7 * 24 * 60 * 60 * 1000)
   } else if (direction === "weekNext") {
