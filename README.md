@@ -1,5 +1,5 @@
 # HWTracker
-A vanilla JS homework tracker with an Express server and using MongoDB
+A vanilla JS homework tracker with an Express server using MongoDB
 
 To start, in terminal type:
 * npm install
