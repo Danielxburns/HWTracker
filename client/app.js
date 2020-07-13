@@ -13,13 +13,13 @@ const user = {
     bricks: '/images/bricks.jpg',
     cave_painting: '/images/cave_painting.jpg',
     burnt_wood: '/images/burnt_wood.jpg',
-    kealing: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/787c7134862611.56f1bac606f4f.png'
+    kealing: '/images/kealing.png'
   }
 };
 
 // should I keep a copy of current week tasks in local storage?
 
-/* ------------- ANCHOR VIEW ------------ */
+/* ------------- ANCHOR VIEWS ------------ */
 
 
 
