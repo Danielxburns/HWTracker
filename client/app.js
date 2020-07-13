@@ -3,6 +3,9 @@ const url = 'http://localhost:3000';
 const cells = document.querySelectorAll('td');
 const changeWeekButtons = document.querySelectorAll('.change-week-button')
 let dayInWeek;
+
+/* ------------- ANCHOR MODEL ------------ */
+
 const user = {
   username: "Thomas",
   bgList: {
@@ -12,16 +15,13 @@ const user = {
     burnt_wood: '/images/burnt_wood.jpg',
     kealing: 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/787c7134862611.56f1bac606f4f.png'
   }
-}
-
-/* ------------- ANCHOR UTILS ------------ */
-
-function getToday() {
-  const now = new Date();
-  const dayOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][now.getDay()];
-  const dateString = now.toDateString();
-  return `${dayOfWeek} ${dateString.substring(3, dateString.length - 5)}, ${now.getFullYear()}`;
 };
+
+// should I keep a copy of current week tasks in local storage?
+
+/* ------------- ANCHOR VIEW ------------ */
+
+
 
 function setWeek(day) {
   document.getElementById('week').innerHTML = ` ${startOfWeek(day)} to ${endOfWeek(day)}`;
@@ -29,17 +29,6 @@ function setWeek(day) {
   return dayInWeek = day;
 };
 
-function startOfWeek(day) {
-  let clone = new Date(day);
-  const diff = clone.getDate() - clone.getDay() + (clone.getDay()? -6 : 0);
-  return new Date(clone.setDate(diff)).toLocaleDateString();
-};
-
-function endOfWeek(day) {
-  let clone = new Date(day);
-  const diff = clone.getDate() - clone.getDay() + (clone.getDay()? 0 : 6);
-  return new Date(clone.setDate(diff)).toLocaleDateString();
-};
 
 function populateCells(tasks) {
   cells.forEach(cell => {
@@ -70,14 +59,46 @@ function displayTask(cell, task) {
   }
 };
 
-/* -------- ANCHOR EVENT HANDLERS -------- */
+function calcPoints(e) {
+  let currPoints = document.getElementById('points').innerHTML;
+  e.target.checked ? currPoints++ : currPoints--;
+  document.getElementById("points").innerHTML = currPoints
+  return currPoints;
+}
+
+function changeBg(name) {
+  const image = user.bgList[name]
+  const html = document.getElementsByTagName('html')[0];
+  html.style.backgroundImage = `url(${image})`;
+};
+
+/* ------------- ANCHOR UTILS - Views ------------ */
+
+function getToday() {
+  const now = new Date();
+  const dayOfWeek = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][now.getDay()];
+  const dateString = now.toDateString();
+  return `${dayOfWeek} ${dateString.substring(3, dateString.length - 5)}, ${now.getFullYear()}`;
+};
+
+function startOfWeek(day) {
+  let clone = new Date(day);
+  const diff = clone.getDate() - clone.getDay();
+  return new Date(clone.setDate(diff)).toLocaleDateString();
+};
+
+function endOfWeek(day) {
+  let clone = new Date(day);
+  const diff = clone.getDate() - clone.getDay() + 6;
+  return new Date(clone.setDate(diff)).toLocaleDateString();
+};
+
+/* -------- ANCHOR EVENT HANDLERS  - Controller ------- */
 
 function handleClick(e) {
   if(e.target.type === 'checkbox') {
-    let currPoints = document.getElementById('points').innerHTML;
-    e.target.checked ? currPoints++ : currPoints--
+    const currPoints = calcPoints(e);
     updatePoints('Thomas', currPoints);
-    document.getElementById("points").innerHTML = currPoints
     return updateTask(e.target.parentNode._id, e.target.nextSibling.dataset.text, e.target.checked);
   } else if (e.target.className === 'text') {
     return (e.shiftKey) ? remove(e.target) : edit(e.target)
@@ -123,17 +144,22 @@ function changeWeek(direction) {
   } else if (direction === "weekNext") {
     dayInWeek = new Date(dayInWeek.getTime() + 7 * 24 * 60 * 60 * 1000)
   }
-  console.log('inside changeWeek - dayInWeek :>> ', dayInWeek);
   setWeek(dayInWeek);
 };
 
-function changeBg(name) {
-  const image = user.bgList[name]
-  const body = document.getElementsByTagName('body')[0];
-  body.style.backgroundImage = `url(${image})`;
-};
+/* ------------- ANCHOR SERVER CALLS - Controller ------------ */
 
-/* ------------- ANCHOR SERVER CALLS ------------ */
+function getUserData(user) {
+  fetch(`${url}/getUserData/${user}`)
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById('points').innerHTML = data.points;
+    //set user name in title
+    // populate user backgrounds and set bg to last used
+    
+  })
+  .catch(err => console.error(err))
+};
 
 function getTasks(day) {
   const weekBegin = day.replace(/\//g, "-");
@@ -211,15 +237,6 @@ function updateTask(id, task, done) {
   })
 };
 
-function getUserData(user) {
-  fetch(`${url}/getUserData/${user}`)
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('points').innerHTML = data.points;
-  })
-  .catch(err => console.error(err))
-}
-
 function updatePoints(username, points) {
   let data = {
     username: username,
@@ -241,6 +258,8 @@ function updatePoints(username, points) {
     console.error(err);
   })
 };
+
+/* ------------- ANCHOR INIT ------------- */
 
 document.getElementById('today').innerHTML = getToday();
 getUserData("Thomas");
