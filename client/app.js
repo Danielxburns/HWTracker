@@ -6,22 +6,10 @@ let dayInWeek;
 
 /* ------------- ANCHOR MODEL ------------ */
 
-const user = {
-  username: "Thomas",
-  bgList: {
-    bunnies: '/images/bunny.png',
-    bricks: '/images/bricks.jpg',
-    cave_painting: '/images/cave_painting.jpg',
-    burnt_wood: '/images/burnt_wood.jpg',
-    kealing: '/images/kealing.png'
-  }
-};
-
-// should I keep a copy of current week tasks in local storage?
+let user = {};
+let tasks = [];
 
 /* ------------- ANCHOR VIEWS ------------ */
-
-
 
 function setWeek(day) {
   document.getElementById('week').innerHTML = ` ${startOfWeek(day)} to ${endOfWeek(day)}`;
@@ -29,7 +17,12 @@ function setWeek(day) {
   return dayInWeek = day;
 };
 
-
+function displayUser(user) {
+  const html = document.getElementsByTagName('html')[0];
+  html.style.backgroundImage = `url(${user.currBg})`;
+  document.getElementById('points').innerHTML = user.points;
+  document.getElementById('user').innerHTML = user.username + "'s";
+}
 function populateCells(tasks) {
   cells.forEach(cell => {
     cell.innerHTML = '';
@@ -67,9 +60,11 @@ function calcPoints(e) {
 }
 
 function changeBg(name) {
-  const image = user.bgList[name]
+  const imageURL = user.bgList.filter(bg => bg.name === name )[0].url;
   const html = document.getElementsByTagName('html')[0];
-  html.style.backgroundImage = `url(${image})`;
+  html.style.backgroundImage = `url(${imageURL})`;
+  user.currBg = imageURL;
+  updateBg({ name: name, url: imageURL });
 };
 
 /* ------------- ANCHOR UTILS - Views ------------ */
@@ -112,6 +107,7 @@ async function addNewTask(el) {
     if (assignment) {
       try {
         const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
+        tasks.push(newTask);
         return await displayTask(el, newTask);
       }
       catch(err) {
@@ -123,8 +119,12 @@ async function addNewTask(el) {
 function remove(el) {
   let sure = confirm(`Are you sure you want to delete \n ${el.innerHTML}?`)
   if (sure) { 
-    deleteTask(el.parentNode._id)
-    el.parentNode.remove();
+    const index = tasks.findIndex(task => {
+      task._id = el.parentNode._id;
+    });
+    tasks.splice(index, 1) 
+    deleteTask(el.parentNode._id)// update the db with a controller
+    el.parentNode.remove(); // MVC ok?
   }
 };
 
@@ -149,29 +149,24 @@ function changeWeek(direction) {
 
 /* ------------- ANCHOR SERVER CALLS - Controller ------------ */
 
-function getUserData(user) {
-  fetch(`${url}/getUserData/${user}`)
-  .then(res => res.json())
-  .then(data => {
-    document.getElementById('points').innerHTML = data.points;
-    //set user name in title
-    // populate user backgrounds and set bg to last used
-    
-  })
-  .catch(err => console.error(err))
+async function getUserData(name) {
+  const response = await fetch(`${url}/getUserData/${name}`);
+  user = await response.json();
+  displayUser(user);
+/* 
+  .catch(err => console.error(err)) */
 };
 
-function getTasks(day) {
+async function getTasks(day) {
   const weekBegin = day.replace(/\//g, "-");
-  fetch(`${url}/getTasks/${weekBegin}`, {mode: 'cors'})
-  .then(res => res.json())
-  .then(data => {
-    populateCells(data);
-  })
+  const response = await fetch(`${url}/getTasks/${weekBegin}`, {mode: 'cors'});
+  tasks = await response.json(); // update the model
+  populateCells(tasks);
+  }/* )
   .catch(err => {
     console.error(JSON.stringify(err)); // TODO handle gracefully 
   })
-};
+}; */
 
 async function postNewTask(subject, day, task) {
   let data = {
@@ -189,9 +184,9 @@ async function postNewTask(subject, day, task) {
     },
     body: JSON.stringify(data),
   })
-  const taskData = await response.json();
-  console.log('Success! Posted to database: ', taskData);
-  return taskData;
+  const newTask = await response.json();
+  console.log('Success! Posted to database: ', newTask);
+  return newTask;
 /*     .catch(err => {
       console.error(err);
     }) */
@@ -229,9 +224,9 @@ function updateTask(id, task, done) {
     body: JSON.stringify(data),
   })
   .then(res => res.json())
-/*   .then(data => {
+  .then(data => {
     console.log('Updated task: ', JSON.stringify(data.task));
-  }) */
+  })
   .catch(err => {
     console.error(err);
   })
@@ -258,6 +253,19 @@ function updatePoints(username, points) {
     console.error(err);
   })
 };
+
+function updateBg(imageObj) {
+  fetch(`${url}/bg/${user.username}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(imageObj)
+  })
+  .then(res => res.json())
+  .then(data => user = data) // maybe just update user.bgList
+  .then(()=> console.log('inside app.updateBg - user :>> ', user))
+}
 
 /* ------------- ANCHOR INIT ------------- */
 
