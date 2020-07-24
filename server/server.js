@@ -79,12 +79,10 @@ app.put('/updatePoints', ((req, res) => {
 
 app.put('/bg/:user', ((req, res)=> {
   const user = { "username": req.params.user };
-  console.log('inside server/bg - user :>> ', user);
   users.updateBg(user, req.body, (err, data) => {
     if(err) {
       res.status(500).send(err)
     } else {
-      console.log('inside server.app.put/bg/ - res.body :>> ', res.body);
       res.json(data);
     }
   })

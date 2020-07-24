@@ -34,15 +34,6 @@ const postNewTask = (task, cb) => {
   });
 };
 
-const deleteTask = (id, cb) => {
-  Task.deleteOne({"_id": id}, ((err, result) => {
-    if(err) {
-      cb(err);
-    } else {
-      cb(null, result);
-    }
-  }));
-};
 
 const updateTask = async (data, cb) => {
   const query = await Task.findOne({"_id": data._id});
@@ -56,6 +47,15 @@ const updateTask = async (data, cb) => {
       cb(null, result);
     }
   });
+};
+const deleteTask = (id, cb) => {
+  Task.deleteOne({"_id": id}, ((err, result) => {
+    if(err) {
+      cb(err);
+    } else {
+      cb(null, result);
+    }
+  }));
 };
 
 module.exports = { getAllTasks, postNewTask, deleteTask, updateTask };

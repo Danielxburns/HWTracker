@@ -10,7 +10,7 @@ let Bg = mongoose.model('Bg', bgSchema)
 const userSchema = new mongoose.Schema({
   username: String,
 /*   password: String, */
-  currBg: String,
+  currBg: bgSchema,
   bgList: [bgSchema],
   points: Number,
 });
@@ -40,11 +40,8 @@ const updatePoints = async (data, cb) => {
 
 const updateBg = async (user, data, cb) => {
   const query = await User.findOne(user);
-  query.currBg = data.url;
-  console.log('inside db/users.updateBg - data :>> ', data);
-  console.log('inside db/users.updateBg - query.bgList :>> ', query.bgList);
-  query.bgList.push(data);
-  console.log('query.bgList :>> ', query.bgList);
+  query.currBg = data;
+  query.bgList.push(data); // don't push it in here
   query.save((err, result) => {
     if(err) {
       cb(err);

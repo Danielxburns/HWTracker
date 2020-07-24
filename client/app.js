@@ -1,5 +1,5 @@
 
-const url = 'http://localhost:3000';
+const url = 'http://localhost:3000'; // maybe move this to controller
 const cells = document.querySelectorAll('td');
 const changeWeekButtons = document.querySelectorAll('.change-week-button')
 let dayInWeek;
@@ -17,11 +17,13 @@ function setWeek(day) {
   return dayInWeek = day;
 };
 
-function displayUser(user) {
+function displayUserInfo(user) {
+  console.log('indside displayUserInfo - user :>> ', user);
   const html = document.getElementsByTagName('html')[0];
-  html.style.backgroundImage = `url(${user.currBg})`;
+  html.style.backgroundImage = `url(${user.currBg.url})`;
   document.getElementById('points').innerHTML = user.points;
   document.getElementById('user').innerHTML = user.username + "'s";
+  document.getElementById('bg').value=user.currBg.name;
 }
 function populateCells(tasks) {
   cells.forEach(cell => {
@@ -59,12 +61,11 @@ function calcPoints(e) {
   return currPoints;
 }
 
-function changeBg(name) {
-  const imageURL = user.bgList.filter(bg => bg.name === name )[0].url;
+function changeBg(bgName) {
+  user.currBg = user.bgList.filter(bg => bg.name === bgName)[0];
   const html = document.getElementsByTagName('html')[0];
-  html.style.backgroundImage = `url(${imageURL})`;
-  user.currBg = imageURL;
-  updateBg({ name: name, url: imageURL });
+  html.style.backgroundImage = `url(${user.currBg.url})`;
+  updateBg(user.currBg)
 };
 
 /* ------------- ANCHOR UTILS - Views ------------ */
@@ -152,7 +153,7 @@ function changeWeek(direction) {
 async function getUserData(name) {
   const response = await fetch(`${url}/getUserData/${name}`);
   user = await response.json();
-  displayUser(user);
+  displayUserInfo(user);
 /* 
   .catch(err => console.error(err)) */
 };
@@ -254,17 +255,20 @@ function updatePoints(username, points) {
   })
 };
 
-function updateBg(imageObj) {
+function updateBg(bgObj) {
+  console.log('inside updateBg - bgObj :>> ', bgObj);
   fetch(`${url}/bg/${user.username}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(imageObj)
+    body: JSON.stringify(bgObj)
   })
   .then(res => res.json())
-  .then(data => user = data) // maybe just update user.bgList
-  .then(()=> console.log('inside app.updateBg - user :>> ', user))
+  .then(res => {
+    user.bgList = res.bgList;
+  })
+  .catch(err => console.error('there was an error updating the background: ', err));
 }
 
 /* ------------- ANCHOR INIT ------------- */
