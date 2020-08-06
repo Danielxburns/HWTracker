@@ -1,6 +1,5 @@
 html {
   background-color: rgb(190, 210, 175);
-  /* background-size: contain; */
 }
 
 body {
@@ -22,7 +21,7 @@ section {
   border-radius: 10px;
   padding: 0px 20px;
   margin: 10px;
-  box-shadow: 0 0 5px 0 rgba(0,0,0,.25) inset, 2px 3px 5px 3px rgb(133, 139, 112);
+  box-shadow: 2px 3px 5px 3px rgba(54, 54, 54, 0.75), inset 1px 1px 4px 0 rgba(0, 0, 0, 0.5);
 }
 
 button {
@@ -60,24 +59,10 @@ h3 {
   border: 18px ridge lightgrey;
   border-radius: 20px;
   background-color: rgb(241, 241, 227);
-  box-shadow: 0 0 5px 0 rgba(0,0,0,.25) inset, 3px 5px 10px 5px rgb(133, 139, 112);
+  box-shadow: .25em .5em 5px 3px rgba(54, 54, 54, 0.75), inset 1px 1px 4px 0 rgba(0, 0, 0, 0.5);
   min-width: 800px;
   padding: 0 20px 20px;
 }
-
-/* this is restricting event delegation */
-
-/* .frame::before {
-  content:"";
-  position: absolute;
-  border: 10px solid rgb(230, 230, 230, .7);
-  border-radius: 18px;
-  top: -15px;
-  bottom: -15px;
-  left: -15px;
-  right: -15px;
-  box-shadow: 0 0 5px 0 rgba(0,0,0,.25) inset,0 0 5px 0 rgba(0,0,0,.25);
-} */
 
 table {
   position: relative;
