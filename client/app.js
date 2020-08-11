@@ -68,6 +68,17 @@ function changeBg(bgName) {
   updateBg(user.currBg)
 };
 
+function addBg() {
+  const url = prompt("paste url of image here");
+  const name = prompt("what would you like to call your new background?");
+  const bgObj = { "url": url, "name": name };
+  if(url && name) { 
+    user.bgList.push(bgObj)
+    console.log('added background - bgObj :>> ', bgObj);
+    changeBg(name);
+  };
+}
+
 /* ------------- ANCHOR UTILS - Views ------------ */
 
 function getToday() {
@@ -256,8 +267,7 @@ function updatePoints(username, points) {
 };
 
 function updateBg(bgObj) {
-  console.log('inside updateBg - bgObj :>> ', bgObj);
-  fetch(`${url}/bg/${user.username}`, {
+  fetch(`${url}/bg/${user._id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -267,6 +277,7 @@ function updateBg(bgObj) {
   .then(res => res.json())
   .then(res => {
     user.bgList = res.bgList;
+    console.log('inside app.js/updateBG user.bgList :>> ', user.bgList);
   })
   .catch(err => console.error('there was an error updating the background: ', err));
 }

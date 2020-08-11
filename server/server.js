@@ -78,12 +78,12 @@ app.put('/updatePoints', ((req, res) => {
 }));
 
 app.put('/bg/:user', ((req, res)=> {
-  const user = { "username": req.params.user };
+  const user = { "_id": req.params.user };
   users.updateBg(user, req.body, (err, data) => {
     if(err) {
       res.status(500).send(err)
     } else {
       res.json(data);
     }
-  })
+  });
 }));

@@ -38,17 +38,28 @@ const updatePoints = async (data, cb) => {
   });
 };
 
-const updateBg = async (user, data, cb) => {
-  const query = await User.findOne(user);
-  query.currBg = data;
-  query.bgList.push(data); // don't push it in here
-  query.save((err, result) => {
-    if(err) {
-      cb(err);
+const updateBg = async (userId, data, cb) => {
+  const userDoc = await User.findOne({ "_id": userId });
+  try {
+    const newBg = await new Bg(data)
+    const oldBg = await userDoc.bgList.id(data._id)
+    if(oldBg) {
+      oldBg.set(data);
+      userDoc.currBg = oldBg
     } else {
-      cb(null, result);
-    }
-  });
+      userDoc.bgList.push(newBg);
+      userDoc.currBg = newBg;
+    };
+    userDoc.save((err, result) => {
+      if(err) {
+        cb(err);
+      } else {
+        cb(null, result);
+      }
+    })
+  } catch (err) {
+    console.log('there was an error updating the background - err :>> ', err);
+  }
 };
 
 module.exports = {  getUserData, updatePoints, updateBg };
