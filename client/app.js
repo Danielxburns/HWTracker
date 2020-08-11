@@ -23,6 +23,7 @@ function displayUserInfo(user) {
   html.style.backgroundImage = `url(${user.currBg.url})`;
   document.getElementById('points').innerHTML = user.points;
   document.getElementById('user').innerHTML = user.username + "'s";
+  user.bgList.forEach(background => addToSelect( 'bg', background))
   document.getElementById('bg').value=user.currBg.name;
 }
 function populateCells(tasks) {
@@ -73,15 +74,19 @@ function addBg() {
   const name = prompt("what would you like to call your new background?");
   const bgObj = { "url": url, "name": name };
   if(url && name) { 
-    user.bgList.push(bgObj)
-    const sel = document.getElementById('bg');
-    let opt = document.createElement('option');
-    opt.value = name;
-    opt.text = name;
-    sel.add(opt);
-    console.log('added background - bgObj :>> ', bgObj);
+    user.bgList.push(bgObj);
+    addToSelect('bg', bgObj);
+    document.getElementById('bg').value = name;
     changeBg(name);
+    console.log('added background - bgObj :>> ', bgObj);
   };
+}
+function addToSelect(selectId, item) {
+  const sel = document.getElementById(selectId);
+  let opt = document.createElement('option');
+  opt.value = item.name;
+  opt.text = item.name;
+  sel.add(opt);
 }
 
 /* ------------- ANCHOR UTILS - Views ------------ */
