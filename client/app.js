@@ -74,6 +74,11 @@ function addBg() {
   const bgObj = { "url": url, "name": name };
   if(url && name) { 
     user.bgList.push(bgObj)
+    const sel = document.getElementById('bg');
+    let opt = document.createElement('option');
+    opt.value = name;
+    opt.text = name;
+    sel.add(opt);
     console.log('added background - bgObj :>> ', bgObj);
     changeBg(name);
   };
