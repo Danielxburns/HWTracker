@@ -7,7 +7,7 @@ let dayInWeek;
 
 let user = {};
 let tasks = [];
-let wishlist = [];
+let wishlist = []; // do I use this?
 
 /* ------------- ANCHOR VIEWS ------------ */
 
@@ -28,6 +28,7 @@ function displayUserInfo(user) {
   document.getElementById('bg').value=user.currBg.name;
   document.getElementById('wl').value=user.currWish.name;
   document.getElementById('wishPic').src=user.currWish.imageURL;
+  // set alt to name
 }
 function populateCells(tasks) {
   cells.forEach(cell => {
@@ -132,7 +133,7 @@ function endOfWeek(day) {
   return new Date(clone.setDate(diff)).toLocaleDateString();
 };
 
-/* -------- ANCHOR EVENT HANDLERS  - Controller ------- */
+/* -------- ANCHOR EVENT HANDLERS  - Controllers ------- */
 
 function handleClick(e) {
   if(e.target.type === 'checkbox') {
@@ -191,7 +192,19 @@ function changeWeek(direction) {
   setWeek(dayInWeek);
 };
 
-/* ------------- ANCHOR SERVER CALLS - Controller ------------ */
+function prevWish() {
+  let index = user.wishlist.findIndex(wish => wish.name === user.currWish.name);
+  if (index === 0) { index = user.wishlist.length};
+
+  showWish(user.wishlist[index -1].name)
+}
+function nextWish() {
+  let index = user.wishlist.findIndex(wish => wish.name === user.currWish.name);
+  if (index === user.wishlist.length - 1) { index = -1 };
+  showWish(user.wishlist[index + 1].name)
+}
+
+/* ------------- ANCHOR SERVER CALLS - Controllers ------------ */
 
 async function getUserData(name) {
   const response = await fetch(`${url}/getUserData/${name}`);
