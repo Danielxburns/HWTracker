@@ -87,3 +87,14 @@ app.put('/bg/:user', ((req, res)=> {
     }
   });
 }));
+
+app.put('/wl/:user', ((req, res)=> {
+  const user = { "_id": req.params.user };
+  users.updateWl(user, req.body, (err, data) => {
+    if(err) {
+      res.status(500).send(err)
+    } else {
+      res.json(data);
+    }
+  });
+}));

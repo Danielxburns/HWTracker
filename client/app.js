@@ -8,6 +8,7 @@ let dayInWeek;
 
 let user = {};
 let tasks = [];
+let wishlist = [];
 
 /* ------------- ANCHOR VIEWS ------------ */
 
@@ -23,8 +24,11 @@ function displayUserInfo(user) {
   html.style.backgroundImage = `url(${user.currBg.url})`;
   document.getElementById('points').innerHTML = user.points;
   document.getElementById('user').innerHTML = user.username + "'s";
-  user.bgList.forEach(background => addToSelect( 'bg', background))
+  user.bgList.forEach(background => addToSelect( 'bg', background));
+  user.wishlist.forEach(wish => addToSelect( 'wl', wish))
   document.getElementById('bg').value=user.currBg.name;
+  document.getElementById('wl').value=user.currWish.name;
+  document.getElementById('wishPic').src=user.currWish.imageURL;
 }
 function populateCells(tasks) {
   cells.forEach(cell => {
@@ -55,6 +59,14 @@ function displayTask(cell, task) {
   }
 };
 
+function addToSelect(selectId, item) {
+  const sel = document.getElementById(selectId);
+  let opt = document.createElement('option');
+  opt.value = item.name;
+  opt.text = item.name;
+  sel.add(opt);
+};
+
 function calcPoints(e) {
   let currPoints = document.getElementById('points').innerHTML;
   e.target.checked ? currPoints++ : currPoints--;
@@ -80,15 +92,26 @@ function addBg() {
     changeBg(name);
     console.log('added background - bgObj :>> ', bgObj);
   };
-}
-function addToSelect(selectId, item) {
-  const sel = document.getElementById(selectId);
-  let opt = document.createElement('option');
-  opt.value = item.name;
-  opt.text = item.name;
-  sel.add(opt);
-}
+};
 
+function showWish(wishName) {
+  user.currWish = user.wishlist.filter(wish => wish.name === wishName)[0];
+  document.getElementById('wishPic').src = user.currWish.imageURL;
+  updateWl(user.currWish);
+};
+function addWish() {
+  const itemURL = prompt("paste item address here")
+  const imageURL = prompt("paste image address here");
+  const name = prompt("what name would you like to give your wish?");
+  const wlObj = { "itemURL": itemURL, "imageURL": imageURL, "name": name };
+  if(itemURL && name) { 
+    user.bgList.push(wlObj);
+    addToSelect('wl', wlObj);
+    document.getElementById('wl').value = name;
+    showWish(name);
+    console.log('added wish! - wlObj :>> ', wlObj);
+  };
+}
 /* ------------- ANCHOR UTILS - Views ------------ */
 
 function getToday() {
@@ -290,6 +313,22 @@ function updateBg(bgObj) {
     console.log('inside app.js/updateBG user.bgList :>> ', user.bgList);
   })
   .catch(err => console.error('there was an error updating the background: ', err));
+};
+
+function updateWl(wlObj) {
+  fetch(`${url}/wl/${user._id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(wlObj)
+  })
+  .then(res => res.json())
+  .then(res => {
+    user.wishlist = res.wishlist;
+    console.log('inside app.js/updateBG user.wishlist :>> ', user.wishlist);
+  })
+  .catch(err => console.error('there was an error updating the wish list: ', err));
 }
 
 /* ------------- ANCHOR INIT ------------- */

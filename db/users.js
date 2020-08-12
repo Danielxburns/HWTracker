@@ -5,13 +5,23 @@ const bgSchema = new mongoose.Schema({
   url: String,
 })
 
-let Bg = mongoose.model('Bg', bgSchema)
+let Bg = mongoose.model('Bg', bgSchema);
+
+const wishSchema = new mongoose.Schema({
+  name: String,
+  itemURL: String,
+  imageURL: String,
+})
+
+let Wish = mongoose.model('wish', wishSchema);
 
 const userSchema = new mongoose.Schema({
   username: String,
 /*   password: String, */
   currBg: bgSchema,
   bgList: [bgSchema],
+  currWish: wishSchema,
+  wishlist: [wishSchema],
   points: Number,
 });
 
@@ -62,4 +72,28 @@ const updateBg = async (userId, data, cb) => {
   }
 };
 
-module.exports = {  getUserData, updatePoints, updateBg };
+const updateWl = async (userId, data, cb) => {
+  const userDoc = await User.findOne({ "_id": userId });
+  try {
+    const newWish = await new Wish(data)
+    const oldWish = await userDoc.wishlist.id(data._id)
+    if(oldWish) {
+      oldWish.set(data);
+      userDoc.currWish = oldBg
+    } else {
+      userDoc.wishlist.push(newWish);
+      userDoc.currWish = newWish;
+    };
+    userDoc.save((err, result) => {
+      if(err) {
+        cb(err);
+      } else {
+        cb(null, result);
+      }
+    })
+  } catch (err) {
+    console.log('there was an error updating the background - err :>> ', err);
+  }
+};
+
+module.exports = {  getUserData, updatePoints, updateBg, updateWl };

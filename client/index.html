@@ -10,8 +10,7 @@
     <header>
       <section id="bgSelect">
         <label for="bg"><u>Background</u></label><br>
-        <select id="bg" name="background" onchange="changeBg(this.value)">
-        </select>
+        <select id="bg" name="background" onchange="changeBg(this.value)"></select>
         <button id="addNewBg" onclick="addBg()">add a new one!</button>
       </section>
       <section id="title">
@@ -21,6 +20,12 @@
       <section id="score"><u>Points</u>
         <div id="points">0</div>
       </section>
+      <section id="wlSelect">
+        <label for="wl"><u>Wish List</u></label>
+        <select id="wl" name="wishlist" onchange="showWish(this.value)"></select>
+        <img id="wishPic"></img><br>
+        <button id="addToWl" onclick="addWish()">add a wish List item</button>
+      </section> 
     </header>
     <div class="frame">
       <div id="weekof">
