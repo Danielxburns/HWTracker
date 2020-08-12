@@ -33,15 +33,19 @@ button {
   vertical-align: text-top;
 }
 
+#wishPic {
+  height: 100px;
+}
+
 #weekof {
   text-align: center;
 }
 
-#weekPrev {
+.left-arrow {
   margin: 0 5px 0 0;
 }
 
-#weekNext {
+.right-arrow {
   margin: 0 0 0 5px;
 }
 

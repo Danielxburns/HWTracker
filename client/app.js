@@ -1,7 +1,6 @@
 
 const url = 'http://localhost:3000'; // maybe move this to controller
 const cells = document.querySelectorAll('td');
-const changeWeekButtons = document.querySelectorAll('.change-week-button')
 let dayInWeek;
 
 /* ------------- ANCHOR MODEL ------------ */
@@ -105,7 +104,7 @@ function addWish() {
   const name = prompt("what name would you like to give your wish?");
   const wlObj = { "itemURL": itemURL, "imageURL": imageURL, "name": name };
   if(itemURL && name) { 
-    user.bgList.push(wlObj);
+    user.wishlist.push(wlObj);
     addToSelect('wl', wlObj);
     document.getElementById('wl').value = name;
     showWish(name);
@@ -310,7 +309,6 @@ function updateBg(bgObj) {
   .then(res => res.json())
   .then(res => {
     user.bgList = res.bgList;
-    console.log('inside app.js/updateBG user.bgList :>> ', user.bgList);
   })
   .catch(err => console.error('there was an error updating the background: ', err));
 };
@@ -326,7 +324,6 @@ function updateWl(wlObj) {
   .then(res => res.json())
   .then(res => {
     user.wishlist = res.wishlist;
-    console.log('inside app.js/updateBG user.wishlist :>> ', user.wishlist);
   })
   .catch(err => console.error('there was an error updating the wish list: ', err));
 }

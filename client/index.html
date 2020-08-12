@@ -21,18 +21,18 @@
         <div id="points">0</div>
       </section>
       <section id="wlSelect">
-        <label for="wl"><u>Wish List</u></label>
-        <select id="wl" name="wishlist" onchange="showWish(this.value)"></select>
+        <label for="wl"><u>Wish List</u></label><br>
         <img id="wishPic"></img><br>
+        <select id="wl" name="wishlist" onchange="showWish(this.value)"></select>
         <button id="addToWl" onclick="addWish()">add a wish List item</button>
       </section> 
     </header>
     <div class="frame">
       <div id="weekof">
         <h2>Assignments for week of:<br/>
-          <button class="change-week-button" id="weekPrev" onclick="changeWeek(id)">◄</button>
+          <button class="left-arrow" id="weekPrev" onclick="changeWeek(id)">◄</button>
           <span id="week"></span>
-          <button class="change-week-button" id="weekNext" onclick="changeWeek(id)">►</button>
+          <button class="right-arrow" id="weekNext" onclick="changeWeek(id)">►</button>
         </h2>
       </div>
       <table>

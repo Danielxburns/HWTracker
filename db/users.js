@@ -79,7 +79,7 @@ const updateWl = async (userId, data, cb) => {
     const oldWish = await userDoc.wishlist.id(data._id)
     if(oldWish) {
       oldWish.set(data);
-      userDoc.currWish = oldBg
+      userDoc.currWish = oldWish
     } else {
       userDoc.wishlist.push(newWish);
       userDoc.currWish = newWish;
