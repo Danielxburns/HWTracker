@@ -2,9 +2,9 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
-const db = require('../db/index.js');
-const fs = require('fs')
-
+const connection = require('../db/index.js');
+const users = require('../db/users');
+const tasks = require('../db/tasks');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -14,11 +14,21 @@ app.use('/', express.static(path.join(__dirname, '/../client')));
 
 app.listen(port, ()=> console.log(`listening on port ${port}.`));
 
-app.get('/getTasks', ((req, res) => {
-  const today = new Date();
-  const diff = today.getDate() - today.getDay() + (today.getDay()? 0 : -6);
-  const weekStart = new Date(today.setDate(diff)).toLocaleDateString();
-  db.getAllTasks({ "weekStart": weekStart }, (err, data) => {
+app.get('/getUserData/:user', ((req, res) => {
+  const user = {"username": req.params.user};
+    users.getUserData(user, (err, data) => {
+    if(err) {
+      res.status(500).send(err)
+    } else {
+      res.json(data);
+    }
+  })
+}));
+
+app.get('/getTasks/:wkStart', ((req, res) => {
+  const weekStart = req.params.wkStart.replace(/-/g, "/");
+  
+  tasks.getAllTasks({ "weekStart": weekStart }, (err, data) => {
     if(err) {
       res.status(500).send(err)
     } else {
@@ -29,7 +39,7 @@ app.get('/getTasks', ((req, res) => {
 
 app.post('/newTask', ((req, res) => {
   const task = req.body;
-  db.postNewTask(task, (err, data) => {
+  tasks.postNewTask(task, (err, data) => {
     if(err) {
       res.status(500).send(err);
     } else {
@@ -38,8 +48,18 @@ app.post('/newTask', ((req, res) => {
   });
 }));
 
+app.put('/updateTask', ((req, res) => {
+  tasks.updateTask(req.body, (err, data) => {
+      if(err) {
+      res.status(500).send(err);
+    } else {
+      res.json(data);
+    }
+  })
+}));
+
 app.delete('/deleteTask', ((req, res) => {
-  db.deleteTask(req.body._id, (err, data) => {
+  tasks.deleteTask(req.body._id, (err, data) => {
     if(err) {
       res.status(500).send(err);
     } else {
@@ -48,13 +68,36 @@ app.delete('/deleteTask', ((req, res) => {
   })
 }));
 
-app.put('/updateTask', ((req, res) => {
-  db.updateTask(req.body, (err, data) => {
+app.put('/updatePoints', ((req, res) => {
+  users.updatePoints(req.body, (err, data) => {
     if(err) {
-    res.status(500).send(err);
-  } else {
-    res.json(data);
-  } })
+      res.status(500).send(err);
+    } else {
+      res.json(data)
+    }
+  })
+}));
+
+app.put('/bg/:user', ((req, res)=> {
+  const user = { "_id": req.params.user };
+  users.updateBg(user, req.body, (err, data) => {
+    if(err) {
+      res.status(500).send(err)
+    } else {
+      res.json(data);
+    }
+  });
+}));
+
+app.put('/wl/:user', ((req, res)=> {
+  const user = { "_id": req.params.user };
+  users.updateWl(user, req.body, (err, data) => {
+    if(err) {
+      res.status(500).send(err)
+    } else {
+      res.json(data);
+    }
+  });
 }));
 
 /* ------------ ANCHOR IMAGES ------------ */
