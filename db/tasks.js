@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const { ObjectId } = require('mongodb');
 
 const taskSchema = new mongoose.Schema({
-  _id: ObjectId,
   subject: String,
   day: String,
   task: String,
@@ -35,7 +33,6 @@ const postNewTask = (task, cb) => {
     }
   });
 };
-
 
 const updateTask = async (data, cb) => {
   const query = await Task.findOne({"_id": data._id});
