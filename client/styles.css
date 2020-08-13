@@ -21,6 +21,7 @@ section {
   border-radius: 10px;
   padding: 0 20px;
   margin: 10px;
+  
   box-shadow: 2px 3px 5px 3px rgba(54, 54, 54, 0.75), inset 1px 1px 4px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -31,6 +32,18 @@ select {
 
 button {
   vertical-align: text-top;
+}
+
+#wlSelect {
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #wishPic {

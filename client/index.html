@@ -22,9 +22,11 @@
       </section>
       <section id="wlSelect">
         <label for="wl"><u>Wish List</u></label><br>
-        <button class="left-arrow" id="prev-wish" onclick="prevWish()">◄</button>
-        <img id="wishPic"></img>
-        <button class="right-arrow" id="next-wish" onclick="nextWish()">►</button>
+        <div class="carousel">
+          <button class="left-arrow" id="prev-wish" onclick="prevWish()">◄</button>
+          <img id="wishPic"></img>
+          <button class="right-arrow" id="next-wish" onclick="nextWish()">►</button>
+        </div>
         <select id="wl" name="wishlist" onchange="showWish(this.value)"></select>
         <button id="addToWl" onclick="addWish()">add a wish List item</button>
       </section> 
