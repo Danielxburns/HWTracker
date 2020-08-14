@@ -106,7 +106,8 @@ function addBg() {
 
 function showWish(wishName) {
   user.currWish = user.wishlist.filter(wish => wish.name === wishName)[0];
-  document.getElementById('wishPic').src = user.currWish.imageURL;
+  document.getElementById('wish-pic').src = user.currWish.imageURL;
+  document.getElementById('wish-link').href = user.currWish.itemURL;
   updateWl(user.currWish);
 };
 function addWish() {
