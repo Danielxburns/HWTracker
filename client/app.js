@@ -1,5 +1,5 @@
 
-const url = 'https://peaceful-gorge-58758.herokuapp.com'; /* 'http://localhost:3000'; */ // maybe move this to controller
+const url = 'https://peaceful-gorge-58758.herokuapp.com';// maybe move this to controller
 const cells = document.querySelectorAll('td');
 let dayInWeek;
 
