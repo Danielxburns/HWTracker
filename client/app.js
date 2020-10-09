@@ -38,7 +38,7 @@ function displayUserInfo(user) {
   user.wishlist.forEach(wish => addToSelect( 'wl', wish))
   document.getElementById('bg').value=user.currBg.name;
   document.getElementById('wl').value=user.currWish.name;
-  document.getElementById('wishPic').src=user.currWish.imageURL;
+  document.getElementById('wish-pic').src=user.currWish.imageURL;
   // set alt to name
 }
 function populateCells(tasks) {
@@ -58,7 +58,7 @@ function displayTask(cell, task) {
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
   checkBox.name = "checkbox";
-  checkbox.id = task._id;
+  checkBox.id = task._id;
   if(task.done) { checkBox.checked = true };
 
   const label = document.createElement("label");
