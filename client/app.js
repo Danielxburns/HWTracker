@@ -61,14 +61,15 @@ function displayTask(cell, task) {
   const label = document.createElement("label");
   label.for = checkBox;
   const linkToAssmt = document.createElement("a");
-  linkToAssmt.innerHTML = task.task;
+  linkToAssmt.innerHTML = “🔗”;
   linkToAssmt.href = task.link;
   if(task) {
-    const assmt = task.link ? linkToAssmt : document.createTextNode(task.task)
-    label.appendChild(assmt)
+    console.log('inside displayTask - task :>> ', task);
+    label.appendChild(document.createTextNode(task.task))
     label.className = 'text';
-    label.setAttribute('data-text', task.task)
+    label.setAttribute('data-text', task.task);
     item.appendChild(checkBox);
+    if (task.link) { item.appendChild(linkToAssmt) }
     item.appendChild(label);
     cell.appendChild(item);
   }
