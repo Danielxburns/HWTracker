@@ -1,4 +1,4 @@
-const { link } = require("fs");
+/* const { link } = require("fs"); */
 
 const url = 'https://booooooooom.herokuapp.com';// maybe move this to controller
 const cells = document.querySelectorAll('td');
