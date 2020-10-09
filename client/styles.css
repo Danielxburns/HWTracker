@@ -139,7 +139,7 @@ input[type=checkbox]:checked + label.text {
   text-decoration: line-through;
 }
 
-label:hover::after {
+.assmt:hover::after {
   content:attr(data-text);
   overflow: visible;
   text-overflow: inherit;

@@ -72,6 +72,7 @@ function displayTask(cell, task) {
 
   if(task) {
     const assmt = document.createElement("span");
+    assmt.className = "assmt";
     assmt.innerHTML = task.task;
     label.className = 'label';
     label.setAttribute('data-text', task.task);
@@ -165,10 +166,7 @@ function handleClick(e) {
     const currPoints = calcPoints(e);
     updatePoints('Thomas', currPoints);
     return updateTask(e.target.parentNode._id, e.target.nextSibling.dataset.text, e.target.checked);
-  } else if (e.target.tagName === "a") {
-
-  }
-  else if (e.target.className === 'text') {
+  } else if (e.target.className === 'assmt') {
     return (e.shiftKey) ? remove(e.target) : edit(e.target)
   } else {
     return addNewTask(e.target)
