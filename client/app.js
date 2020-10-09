@@ -182,7 +182,7 @@ async function addNewTask(el) {
     const link = prompt('add link');
     if (assignment) {
       try {
-        const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
+        const newTask = await postNewTask(el.className, el.parentNode.className, assignment, link);
         tasks.push(newTask);
         return await displayTask(el, newTask);
       }
