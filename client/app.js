@@ -71,9 +71,11 @@ function displayTask(cell, task) {
   linkToAssmt.target = "_blank"
 
   if(task) {
+    const assmt = document.createElement("span");
+    assmt.innerHTML = task.task;
     label.className = 'label';
     label.setAttribute('data-text', task.task);
-    label.appendChild(document.createTextNode(task.task))
+    label.appendChild(assmt);
     item.appendChild(checkBox);
     if (task.link) { item.appendChild(linkToAssmt) }
     item.appendChild(label);
