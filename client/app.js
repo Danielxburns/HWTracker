@@ -68,6 +68,7 @@ function displayTask(cell, task) {
   linkToAssmt.className = "link"
   linkToAssmt.innerHTML = "&#x1F517;";
   linkToAssmt.href = task.link;
+  linkToAssmt.target = "_blank"
 
   if(task) {
     label.className = 'label';
