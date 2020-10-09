@@ -61,7 +61,7 @@ function displayTask(cell, task) {
   const label = document.createElement("label");
   label.for = checkBox;
   const linkToAssmt = document.createElement("a");
-  linkToAssmt.innerHTML = “🔗”;
+  linkToAssmt.innerHTML = "&#x1F517;";
   linkToAssmt.href = task.link;
   if(task) {
     console.log('inside displayTask - task :>> ', task);
