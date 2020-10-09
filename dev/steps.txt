@@ -1,0 +1,20 @@
+Steps:
+
+
+Create an empty file in your favorite spreadsheet program
+
+Login to TEAMS and click on your students Report Cards tab
+Using your totally bad ass ninja copy/paste skills
+	- underneath where it says"scheduled"
+	- use your mouse to select the table data from the top left to the bottom right, not including the columns with the grades. We'll get to that later
+	- got it? Make sure you didn't leave out the verrry first digit of the course number in the first cell. It's easy to miss.
+	- got it? Are you sure? If there's a scrollbar on the right side of the window there might be some rows hidden. You might need click and scroll at the same time to get it all.
+	- copy that using CTRL-C
+	- paste it into your empty spreadsheet
+	- copy the column headers and paste them in about the other data
+	- save that as a csv named "courses_FA20" or something like that
+
+for each course click on the red numbers to see the assignments for that grading period
+for each table select the table data like you did before and CTRL-C copy and paste into an assignments file
+
+

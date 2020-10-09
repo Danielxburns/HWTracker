@@ -1,3 +1,4 @@
+const { link } = require("fs");
 
 const url = 'https://booooooooom.herokuapp.com';// maybe move this to controller
 const cells = document.querySelectorAll('td');
@@ -17,7 +18,7 @@ cells.forEach(cell => {
 
 let user = {};
 let tasks = [];
-let wishlist = []; // do I use this?
+let wishlist = []; // do I use this anymore or is it always a property of the user now?  
 
 /* ------------- ANCHOR VIEWS ------------ */
 
@@ -59,8 +60,12 @@ function displayTask(cell, task) {
   if(task.done) { checkBox.checked = true }
   const label = document.createElement("label");
   label.for = checkBox;
+  const linkToAssmt = document.createElement("a");
+  linkToAssmt.innerHTML = task.task;
+  linkToAssmt.href = task.link;
   if(task) {
-    label.appendChild(document.createTextNode(task.task))
+    const assmt = task.link ? linkToAssmt : document.createTextNode(task.task)
+    label.appendChild(assmt)
     label.className = 'text';
     label.setAttribute('data-text', task.task)
     item.appendChild(checkBox);
@@ -103,7 +108,7 @@ function addBg() {
     console.log('added background - bgObj :>> ', bgObj);
   };
 };
-
+                
 function showWish(wishName) {
   user.currWish = user.wishlist.filter(wish => wish.name === wishName)[0];
   document.getElementById('wish-pic').src = user.currWish.imageURL;
@@ -174,6 +179,7 @@ function handleBackground() {
 
 async function addNewTask(el) {
     const assignment = prompt('add an assignment');
+    const link = prompt('add link');
     if (assignment) {
       try {
         const newTask = await postNewTask(el.className, el.parentNode.className, assignment);
@@ -259,7 +265,7 @@ async function getBackgrounds() {
   // if new POST request to images collection returning the image
 }
 
-async function postNewTask(subject, day, task) {
+async function postNewTask(subject, day, task, link) {
   const data = {
     subject: subject,
     day: day,
@@ -267,6 +273,7 @@ async function postNewTask(subject, day, task) {
     weekStart: startOfWeek(new Date()),
     weekEnd: endOfWeek(new Date()),
     task: task,
+    link: link,
   };
   const response = await fetch(`${url}/newTask`, {
     method: 'POST',

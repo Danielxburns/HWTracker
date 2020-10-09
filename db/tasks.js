@@ -4,6 +4,7 @@ const taskSchema = new mongoose.Schema({
   subject: String,
   day: String,
   task: String,
+  link: String,
   createdOn: Date,
   modifiedOn: Date,
   weekStart: String,
