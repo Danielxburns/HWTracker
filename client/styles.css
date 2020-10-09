@@ -131,7 +131,7 @@ input[type=checkbox]:checked + label.text {
   text-decoration: line-through;
 }
 
-label:hover::after {
+label :first-child:hover::after {
   content:attr(data-text);
   overflow: visible;
   text-overflow: inherit;
@@ -141,7 +141,7 @@ label:hover::after {
   width: auto;
   max-width: 20rem;
   border: 1px solid #eaebec;
-  padding: 0 .2rem;
+  padding: 0 .5rem;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.28);
   white-space: normal;
   word-wrap: break-word;

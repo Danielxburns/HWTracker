@@ -54,20 +54,25 @@ function populateCells(tasks) {
 function displayTask(cell, task) {
   const item = document.createElement("div");
   item.className = "item";
-  item._id = task._id;
+  
   const checkBox = document.createElement("input");
   checkBox.type = "checkbox";
-  if(task.done) { checkBox.checked = true }
+  checkBox.name = "checkbox";
+  checkbox.id = task._id;
+  if(task.done) { checkBox.checked = true };
+
   const label = document.createElement("label");
-  label.for = checkBox;
+  label.for = task._id;
+
   const linkToAssmt = document.createElement("a");
+  linkToAssmt.className = "link"
   linkToAssmt.innerHTML = "&#x1F517;";
   linkToAssmt.href = task.link;
+
   if(task) {
-    console.log('inside displayTask - task :>> ', task);
-    label.appendChild(document.createTextNode(task.task))
-    label.className = 'text';
+    label.className = 'label';
     label.setAttribute('data-text', task.task);
+    label.appendChild(document.createTextNode(task.task))
     item.appendChild(checkBox);
     if (task.link) { item.appendChild(linkToAssmt) }
     item.appendChild(label);
