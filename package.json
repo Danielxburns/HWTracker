@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/Danielxburns/HWTracker#readme",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "mongodb": "^3.5.8",
     "mongoose": "^5.9.13",
     "node": "^14.8.0",
