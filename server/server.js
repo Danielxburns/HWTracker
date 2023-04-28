@@ -1,5 +1,6 @@
 
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const connection = require('../db/index.js');
@@ -8,6 +9,7 @@ const tasks = require('../db/tasks');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use('/', express.static(path.join(__dirname, '/../client')));
