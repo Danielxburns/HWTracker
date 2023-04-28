@@ -1,4 +1,6 @@
-# HWTracker
+
+# Homework Tracker
+
 A vanilla JS homework tracker with an Express server using MongoDB
 
 The objective of this app is to create a common inferface for parents and children to keep track of what the students homework assignments are and what has been completed.
@@ -6,12 +8,38 @@ The objective of this app is to create a common inferface for parents and childr
 It provides an incentive for completion by way of a point system.
 Points can be redeemed for items added to a wish list.
 
-To start, in terminal type:
-* npm install
-* npm run start
 
+## Tech Stack
+
+**Client:** Vanilla JS
+
+**Server:** Node, Express
+
+**Database:** MongoDB
+
+
+## Deployment
+
+### Development
 To start in dev mode, in terminal type:
 * npm install
 * sudo service mongod start
 * npm run dev
 * in browser go to localhost:3000
+
+### Production
+push to master branch to deploy
+production is deployed to heroku at https://booooooooom.herokuapp.com/
+
+currently not working due to lack of connection to database
+the mLabs Mongodb addon for Heroku has been discontinued
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
+## Roadmap
+
+- Try to connect to Mongo Atlas by following these [instructions](https://www.mongodb.com/developer/products/atlas/use-atlas-on-heroku/)
