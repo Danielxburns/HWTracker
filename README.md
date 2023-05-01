@@ -8,6 +8,7 @@ The objective of this app is to create a common inferface for parents and childr
 It provides an incentive for completion by way of a point system.
 Points can be redeemed for items added to a wish list.
 
+![homework_tracker resized](https://user-images.githubusercontent.com/41316262/235381998-cac85ea9-a2d7-4025-aa41-e26c5641c489.png)
 
 ## Tech Stack
 
