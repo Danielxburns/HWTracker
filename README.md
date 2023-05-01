@@ -21,6 +21,10 @@ Points can be redeemed for items added to a wish list.
 
 ## Deployment
 
+You will need to install the Heroku CLI first
+
+```git push heroku main```
+
 ### Development
 To start in dev mode, in terminal type:
 * npm install
@@ -32,8 +36,9 @@ To start in dev mode, in terminal type:
 push to master branch to deploy
 production is deployed to heroku at https://booooooooom.herokuapp.com/
 
-currently not working due to lack of connection to database
-the mLabs Mongodb addon for Heroku has been discontinued
+* currently not working due to lack of connection to database.
+  The mLabs Mongodb addon for Heroku has been discontinued.
+  See Roadmap section for ideas for fix.
 
 
 ## License
