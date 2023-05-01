@@ -23,7 +23,7 @@ Points can be redeemed for items added to a wish list.
 
 You will need to install the Heroku CLI first
 
-```git push heroku main```
+```git push heroku master```
 
 ### Development
 To start in dev mode, in terminal type:
