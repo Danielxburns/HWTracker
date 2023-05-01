@@ -3,7 +3,7 @@
 
 A vanilla JS homework tracker with an Express server using MongoDB
 
-The objective of this app is to create a common inferface for parents and children to keep track of what the students homework assignments are and what has been completed.
+The objective of this app is to create a common interface for parents and children to keep track of what the student's homework assignments are and what has been completed.
 
 It provides an incentive for completion by way of a point system.
 Points can be redeemed for items added to a wish list.
