@@ -25,6 +25,9 @@ You will need to install the Heroku CLI first
 
 ```git push heroku master```
 
+* I updated the default branch on github from master to main.
+* I did not yet configure heroku to work with this change 
+
 ### Development
 To start in dev mode, in terminal type:
 * npm install
