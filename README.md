@@ -24,7 +24,7 @@ Points can be redeemed for items added to a wish list.
 You will need to install the Heroku CLI first
 
 ```
-git push heroku master
+$ git push heroku master
 ```
 
 * I updated the default branch on github from master to main.
