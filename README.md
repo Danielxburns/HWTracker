@@ -53,4 +53,4 @@ production is deployed to heroku at https://booooooooom.herokuapp.com/
 
 ## Roadmap
 
-- Try to connect to Mongo Atlas by following these [instructions](https://www.mongodb.com/developer/products/atlas/use-atlas-on-heroku/)
+- Try to connect to Heroku to Mongo Atlas by following these [instructions](https://www.mongodb.com/developer/products/atlas/use-atlas-on-heroku/)
